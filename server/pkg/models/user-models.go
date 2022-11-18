@@ -1,7 +1,9 @@
 package models
 
 import (
+	// "fmt"
 	"server/pkg/config"
+
 	"gorm.io/gorm"
 )
 
@@ -9,9 +11,9 @@ var db *gorm.DB
 
 type Users struct{
 	gorm.Model
-    Username string `json:"username"`
-    Password string `json:"password"`
-    Email    string  `json:"email"`
+    Username string `form:"username" json:"username"`
+    Password string `form:"password" json:"password"`
+    Email    string  `form:"email" json:"email"`
 }
 
 func init()  {
@@ -23,6 +25,11 @@ func init()  {
 func (user *Users) RegisterUser() *Users{
 	db.Create(&user) 
 	return user
+}
+
+func (u *Users) LoginUser() *Users{
+	db.First(&u, "username = ?", u.Username)
+	return u
 }
 
 func GetAllUsers() []Users{
