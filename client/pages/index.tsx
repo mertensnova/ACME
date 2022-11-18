@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { Navbar, Button, Link, Text } from "@nextui-org/react";
-import { Layout } from "../components/Layout";
 import { AcmeLogo } from "../components/Logo";
 
 export default function Home() {
@@ -20,11 +19,11 @@ export default function Home() {
         </Navbar.Brand>
         <Navbar.Content hideIn="xs"></Navbar.Content>
         <Navbar.Content>
-          <Navbar.Link color="inherit" href="#">
+          <Navbar.Link color="inherit" href="/login">
             Login
           </Navbar.Link>
           <Navbar.Item>
-            <Button auto flat as={Link} href="#">
+            <Button auto flat as={Link} href="/register">
               Sign Up
             </Button>
           </Navbar.Item>

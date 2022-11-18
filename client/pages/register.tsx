@@ -24,6 +24,7 @@ const Register = () => {
         password,
       });
       if (response.status === 200) {
+        localStorage.setItem("user", response.data);
         window.location.href = "/dashboard";
       }
     } catch (error: any) {

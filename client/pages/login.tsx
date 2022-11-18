@@ -21,9 +21,12 @@ const Login = () => {
         username,
         password,
       });
+      console.log(response);
       if (response.status === 200) {
+        localStorage.setItem("user", JSON.stringify(response.data));
         window.location.href = "/dashboard";
       }
+      return response.data;
     } catch (error: any) {
       console.log(error);
     }
