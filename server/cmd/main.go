@@ -1,10 +1,12 @@
 package main
 
 import (
-	"github.com/labstack/echo/v4"
 	"server/pkg/handlers"
-	"github.com/labstack/echo/v4/middleware"
 
+	"github.com/labstack/echo/v4"
+	"github.com/gorilla/sessions"
+	"github.com/labstack/echo-contrib/session"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -14,13 +16,15 @@ func main() {
 	app.Use(middleware.Logger())
 	app.Use(middleware.Recover())
 	app.Use(middleware.CORS())
+	app.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
+
 	
    
 	// Users Routes
 	app.POST("/register",handlers.RegisterUser)
 	app.POST("/login", handlers.LoginUser)
 	app.GET("/logout", handlers.Logout)
-	app.GET("/dashboard", handlers.CheckAuth)
+	// app.GET("/dashboard", handlers.CheckAuth)
 	app.GET("/users",handlers.GetAllUsers)
 	app.GET("/user/:id",handlers.GetUserById)
 	app.DELETE("/user/:id",handlers.DeleteUser)

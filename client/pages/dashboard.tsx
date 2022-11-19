@@ -1,18 +1,19 @@
 import { Navbar, Text, Avatar, Dropdown, Input } from "@nextui-org/react";
 import axios from "axios";
-import { Layout } from "../components/Layout";
-import { AcmeLogo } from "../components/Logo";
-import { SearchIcon } from "../components/SearchIcon";
+import { AcmeLogo } from "../components/icons/Logo";
+import { SearchIcon } from "../components/icons/SearchIcon";
 import { API_URL } from "./api/url";
+import { auth } from "./api/auth";
+// import handler from "./api/hello";
 
 export default function Dashboard() {
   let user;
   if (typeof window !== "undefined") {
-    user = JSON.parse(localStorage.getItem("user"));
+    user = JSON.parse(localStorage.getItem("user") ?? "");
+    // localStorage.getItem("user") !== null ? localStorage.getItem("user") : ""
   } else {
     console.log("You are on the server");
   }
-  const { email } = user;
   const logout = async () => {
     try {
       const resp = await axios.get(`${API_URL}/logout`);
@@ -90,7 +91,7 @@ export default function Dashboard() {
                     Signed in as
                   </Text>
                   <Text b color="inherit" css={{ d: "flex" }}>
-                    {email}
+                    {user?.email}
                   </Text>
                 </Dropdown.Item>
                 <Dropdown.Item key="settings" withDivider>
