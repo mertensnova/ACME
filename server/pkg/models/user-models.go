@@ -1,7 +1,6 @@
 package models
 
 import (
-	// "fmt"
 	"server/pkg/config"
 
 	"gorm.io/gorm"

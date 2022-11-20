@@ -17,12 +17,13 @@ export default function Dashboard() {
   const logout = async () => {
     try {
       const resp = await axios.get(`${API_URL}/logout`);
-      localStorage.removeItem("user");
+
       return resp;
     } catch (error) {
       console.log(error);
     }
   };
+  auth();
   return (
     <>
       <form onSubmit={logout} action={`${API_URL}/logout`} method="GET">
@@ -100,7 +101,7 @@ export default function Dashboard() {
                 <Dropdown.Item key="edit">Edit Profile</Dropdown.Item>
 
                 <Dropdown.Item
-                  // onClick={logout}
+                  // onPress={() => localStorage.removeItem("user")}
                   key="logout"
                   withDivider
                   color="error"
