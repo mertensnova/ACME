@@ -1,12 +1,55 @@
 import axios from "axios";
 import { API_URL } from "./url";
 
-export const auth = async () => {
+export const registerUser = async ({ username, email, password }: any) => {
   try {
-    const resp = await axios.get(`${API_URL}/dashboard`);
-    console.log(resp.data);
-    console.log(resp);
-    return resp.data;
+    const response = await axios.post(
+      `${API_URL}/register`,
+      {
+        username,
+        email,
+        password,
+      },
+      { withCredentials: true }
+    );
+    if (response.status === 200) {
+      localStorage.setItem("user", response.data);
+      window.location.href = "/dashboard";
+    }
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
+export const loginUser = async ({ username, password }: any) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/login`,
+      {
+        username,
+        password,
+      },
+      { withCredentials: true }
+    );
+    console.log(response);
+    if (response.status === 200) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+      window.location.href = "/dashboard";
+    }
+    return response.data;
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
+export const logout = async () => {
+  try {
+    const resp = await axios.get(`${API_URL}/logout`, {
+      withCredentials: true,
+    });
+    window.location.href = "/";
+
+    return resp;
   } catch (error) {
     console.log(error);
   }

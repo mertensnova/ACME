@@ -1,34 +1,40 @@
 package handlers
 
 import (
-	// "fmt"
-
 	"net/http"
 	"server/pkg/models"
 	"server/pkg/utils"
+	"strings"
 
 	"github.com/gorilla/sessions"
+	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 )
 
-var store = sessions.NewCookieStore([]byte("super-secret"))
+func AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		session, _ := session.Get("session", c)
+		session.Options = &sessions.Options{
+			Path:     "/",
+			MaxAge:   86400 * 7,
+			HttpOnly: true,
+		  }
+		_, ok := session.Values["userID"]
 
-
-func CheckAuth(c echo.Context) error {
-	session, _ := store.Get(c.Request(), "session")
-	store.Options = &sessions.Options{
-		Domain:   "http://localhost:3000",
-		Path:     "/",
-		MaxAge:   3600 * 8, // 8 hours
-		HttpOnly: true,
+		if strings.Split(c.Path(),"/")[1] == "login" {
+			return next(c)
+		}
+		
+		if !ok {
+			http.Redirect(c.Response(),c.Request(),"http://localhost:3000/",http.StatusFound)
+			return c.String(http.StatusForbidden, "Unauthorized")
+		}
+		if session.Values["authenticated"] == false{
+			http.Redirect(c.Response(),c.Request(),"http://localhost:3000/",http.StatusFound)
+			return c.String(http.StatusForbidden, "Unauthorized")
+		}
+		return next(c)
 	}
-	_, ok := session.Values["userID"]
-	// fmt.Println("ok:", ok)
-	if !ok {
-		// http.Redirect(c.Response(), c.Request(), "http://localhost:3000", http.StatusFound) // http.StatusFound is 302
-		return c.String(http.StatusForbidden, "Unauthorized")
-	}
-	return c.String(http.StatusOK, "Authorized")
 }
 
 func RegisterUser(c echo.Context) error {
@@ -51,17 +57,16 @@ func RegisterUser(c echo.Context) error {
 	b := user.RegisterUser()
 
 	// Set user as authenticated
-	session, _ := store.Get(c.Request(), "session")
-	store.Options = &sessions.Options{
-		Domain:   "http://localhost:3000",
+	session, _ := session.Get("session", c)
+	session.Options = &sessions.Options{
 		Path:     "/",
-		MaxAge:   3600 * 8, // 8 hours
+		MaxAge:   86400 * 7,
 		HttpOnly: true,
-	}
-	// session struct has field Values map[interface{}]interface{}
+	  }
+
 	session.Values["userID"] = u.ID
 	session.Values["authenticated"] = true
-	// save before writing to response/return from handler
+
 	session.Save(c.Request(), c.Response())
 
 
@@ -70,7 +75,6 @@ func RegisterUser(c echo.Context) error {
 
 func LoginUser(c echo.Context) error {
 	u := new(models.Users)
-	// sess, _ := session.Get("session", c)
 	
     err := c.Bind(&u); if err!= nil {
         return c.String(http.StatusBadRequest, "bad request")
@@ -88,40 +92,37 @@ func LoginUser(c echo.Context) error {
 		return c.String(http.StatusForbidden,"Password mismatch")
 	}
 
-// Set user as authenticated
-	session, _ := store.Get(c.Request(), "session")
-	store.Options = &sessions.Options{
-		Domain:   "http://localhost:3000",
+	// Set user as authenticated
+	session, _ := session.Get("session", c)
+	session.Options = &sessions.Options{
 		Path:     "/",
-		MaxAge:   3600 * 8, // 8 hours
+		MaxAge:   86400 * 7,
 		HttpOnly: true,
-	}
-// session struct has field Values map[interface{}]interface{}
+  	}
 	session.Values["userID"] = u.ID
 	session.Values["authenticated"] = true
-// save before writing to response/return from handler
+
+
 	session.Save(c.Request(), c.Response())
 
 	return c.JSON(http.StatusOK, b)
 }
 
 func Logout(c echo.Context) error {
-    // sess, _ := session.Get("session", c)
-	// session, _ := store.Get(c.Request(), "session")
-// 	store.Options = &sessions.Options{
-// 		Domain:   "http://localhost:3000",
-// 		Path:     "/",
-// 		MaxAge:   3600 * 8, // 8 hours
-// 		HttpOnly: true,
-// 	}
-// // session struct has field Values map[interface{}]interface{}
-// 	delete(session.Values,"user_id")
-// 	// delete(session.Values["userID"])
-// 	session.Values["authenticated"] = false
+	session, _ := session.Get("session", c)
+	session.Options = &sessions.Options{
+		Path:     "/",
+		MaxAge: -1,
+		HttpOnly: true,
+	  }
 
-    // // Revoke users authentication
-    // session.Save(c.Request(),c.Response())
-	return c.String(http.StatusOK,"User has been logout")
+	delete(session.Values,"userID")
+	
+	session.Values["authenticated"] = false
+
+    // Revoke users authentication
+    session.Save(c.Request(),c.Response())
+	return c.JSON(http.StatusOK, "Logout")
 
 }
 

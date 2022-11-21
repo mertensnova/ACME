@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Modal, Button, Text, Input, Row, Checkbox } from "@nextui-org/react";
+import { Modal, Button, Text, Input } from "@nextui-org/react";
 import { Mail } from "./icons/Mail";
 import { Password } from "./icons/Password";
 import { API_URL } from "../pages/api/url";
-import axios from "axios";
+import { registerUser } from "../pages/api/auth";
 import User from "./icons/User";
 
 export default function SignInModal() {
@@ -13,32 +13,14 @@ export default function SignInModal() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e: any) => {
-    // e.preventDefault();
-    try {
-      const response = await axios.post(`${API_URL}/register`, {
-        username,
-        email,
-        password,
-      });
-      if (response.status === 200) {
-        localStorage.setItem("user", response.data);
-        window.location.href = "/dashboard";
-      }
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
-
   const closeHandler = () => {
     setVisible(false);
-    // console.log("closed");
   };
 
   return (
     <>
       <form
-        // onSubmit={handleSubmit}
+        onSubmit={() => registerUser({ username, email, password })}
         action={`${API_URL}/register`}
         method="POST"
       >
@@ -106,7 +88,12 @@ export default function SignInModal() {
               <Button auto flat color="error" onClick={closeHandler}>
                 Close
               </Button>
-              <Button flat onPress={handleSubmit} type="submit" auto>
+              <Button
+                onClick={() => registerUser({ username, email, password })}
+                flat
+                type="submit"
+                auto
+              >
                 Sign in
               </Button>
             </Modal.Footer>
