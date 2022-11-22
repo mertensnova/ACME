@@ -1,4 +1,5 @@
 import { Navbar, Text, Avatar, Dropdown, Input } from "@nextui-org/react";
+import AddPostModal from "../components/AddPostModal";
 import PostCard from "../components/Card";
 import { AcmeLogo } from "../components/icons/Logo";
 import { SearchIcon } from "../components/icons/SearchIcon";
@@ -102,6 +103,7 @@ export default function Dashboard() {
       <PostCard />
       <PostCard />
       <PostCard />
+      <AddPostModal />
     </>
   );
 }

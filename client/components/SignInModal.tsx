@@ -36,6 +36,7 @@ export default function SignInModal() {
             Sign Up
           </Button>
           <Modal
+            blur
             closeButton
             aria-labelledby="modal-title"
             open={visible}
