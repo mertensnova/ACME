@@ -33,5 +33,9 @@ func main() {
 	app.DELETE("/user/:id",handlers.DeleteUser)
 
 	// Post Routes
+	// app.POST("/add-post",handlers.RegisterUser)
+	// app.DELETE("/delete/:id", handlers.LoginUser)
+	// app.GET("/getposts", handlers.Logout)
+
 	app.Logger.Fatal(app.Start(":8080"))
 }

@@ -1,7 +1,11 @@
 package handlers
 
 import (
+	"fmt"
+	"io"
+	"io/ioutil"
 	"net/http"
+	"os"
 	"server/pkg/models"
 	"server/pkg/utils"
 	"strings"
@@ -21,7 +25,8 @@ func AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		  }
 		_, ok := session.Values["userID"]
 
-		if strings.Split(c.Path(),"/")[1] == "login" {
+		if strings.Split(c.Path(),"/")[1] == "login" ||
+		 strings.Split(c.Path(),"/")[1] == "register"{
 			return next(c)
 		}
 		
@@ -47,10 +52,40 @@ func RegisterUser(c echo.Context) error {
 	// Hash password
 	hash, _ := utils.HashPassword(u.Password)
 
+
+	// Source
+	file,err := c.FormFile("Profile")
+	if err != nil {
+		return err
+	}
+	src, err := file.Open()
+	if err != nil {
+		return err
+	}
+	
+	defer src.Close()
+
+	// Destination
+	dst, err := os.Create(file.Filename)
+	if err != nil {
+		return err
+	}
+	defer dst.Close()
+
+	// Copy
+	if _, err = io.Copy(dst, src); err != nil {
+		return err
+	}
+	fileBytes,err := ioutil.ReadAll(src)
+	fmt.Println(fileBytes)
+
   	user := models.Users{
+	Fullname: u.Fullname,
     Username: u.Username,
     Password: hash,
     Email: u.Email,
+	Profile: u.Profile,
+	Posts: u.Posts,
   	}
 
 	// Add to database

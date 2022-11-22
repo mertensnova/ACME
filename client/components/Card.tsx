@@ -1,5 +1,6 @@
 import { Card, Grid, Text, Container, Spacer, Button } from "@nextui-org/react";
 import React from "react";
+import Like from "./icons/Like";
 
 export default function PostCard() {
   return (
@@ -21,18 +22,24 @@ export default function PostCard() {
                 </Text>
               </Grid>
               <Grid xs={12}>
-                <Text css={{ color: "$accents8" }}>nextui.org</Text>
+                <Text css={{ color: "$accents8" }}>@nextui.org</Text>
               </Grid>
             </Grid.Container>
           </Card.Header>
           <Card.Body css={{ py: "$2" }}>
             <Text>
-              Make beautiful websites regardless of your design experience.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Purus
+              gravida quis blandit turpis. Augue neque gravida in fermentum et
+              sollicitudin ac orci. Et sollicitudin ac orci phasellus egestas.
+              Elementum tempus egestas sed sed risus pretium quam vulputate.
+              Interdum velit euismod in pellentesque massa placerat duis
+              ultricies.
             </Text>
           </Card.Body>
           <Card.Footer>
             <Button size="sm" color={"primary"} auto ghost>
-              Like
+              Like {1}
             </Button>
             <Spacer x={1} />
             <Button size="sm" color={"success"} auto ghost>

@@ -10,9 +10,12 @@ var db *gorm.DB
 
 type Users struct{
 	gorm.Model
-    Username string `form:"username" json:"username"`
+	Fullname string `form:"fullname" json:"fullname"`
+    Username string `gorm:"unique" form:"username" json:"username"`
     Password string `form:"password" json:"password"`
-    Email    string  `form:"email" json:"email"`
+    Email    string  `gorm:"unique" form:"email" json:"email"`
+	Profile byte 	`form:"profile" json:"profile"`
+	Posts []Posts  	`gorm:"foreignKey:UserID;references:ID"`
 }
 
 func init()  {

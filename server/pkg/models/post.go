@@ -10,11 +10,16 @@ type Posts struct{
 	gorm.Model
     Content string `form:"content" json:"content"`
     Likes int `json:"likes"`
-    User   *Users  `json:"user"`
+    UserID  uint
 }
 
 func init()  {
 	config.Connect()
 	db = config.GetDB()
 	db.AutoMigrate(&Posts{})
+}
+
+func (post *Posts) AddPost() *Posts{
+	db.Create(&post) 
+	return post 
 }

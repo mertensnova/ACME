@@ -75,6 +75,7 @@ export default function Dashboard() {
               onAction={(actionKey) => {
                 if (actionKey === "logout") {
                   logout();
+                  localStorage.removeItem("user");
                 }
               }}
             >
@@ -84,6 +85,7 @@ export default function Dashboard() {
                 </Text>
                 <Text b color="inherit" css={{ d: "flex" }}>
                   {user?.email}
+                  {/* Hello */}
                 </Text>
               </Dropdown.Item>
               <Dropdown.Item key="settings" withDivider>
@@ -97,6 +99,8 @@ export default function Dashboard() {
           </Dropdown>
         </Navbar.Content>
       </Navbar>
+      <PostCard />
+      <PostCard />
       <PostCard />
     </>
   );

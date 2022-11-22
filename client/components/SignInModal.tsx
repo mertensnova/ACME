@@ -5,13 +5,17 @@ import { Password } from "./icons/Password";
 import { API_URL } from "../pages/api/url";
 import { registerUser } from "../pages/api/auth";
 import User from "./icons/User";
+import UserCircle from "./icons/UserCircle";
+import Profile from "./icons/Profile";
 
 export default function SignInModal() {
-  const [visible, setVisible] = React.useState(false);
   const handler = () => setVisible(true);
+  const [visible, setVisible] = React.useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullname, setFullname] = useState("");
+  const [profile, setProfile] = useState("");
 
   const closeHandler = () => {
     setVisible(false);
@@ -20,9 +24,12 @@ export default function SignInModal() {
   return (
     <>
       <form
-        onSubmit={() => registerUser({ username, email, password })}
+        onSubmit={() =>
+          registerUser({ username, email, password, fullname, profile })
+        }
         action={`${API_URL}/register`}
         method="POST"
+        encType="multipart/form-data"
       >
         <div>
           <Button auto flat onClick={handler}>
@@ -44,6 +51,19 @@ export default function SignInModal() {
             </Modal.Header>
 
             <Modal.Body>
+              <Input
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                type={"text"}
+                name="Fullname"
+                value={fullname}
+                placeholder="Full Name"
+                onChange={(e) => setFullname(e.target.value)}
+                contentLeft={<UserCircle fill="currentColor" />}
+              />
               <Input
                 clearable
                 bordered
@@ -83,13 +103,28 @@ export default function SignInModal() {
                 onChange={(e) => setPassword(e.target.value)}
                 contentLeft={<Password fill="currentColor" />}
               />
+              <Input
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                type={"file"}
+                name="Profile"
+                value={profile}
+                placeholder="Profile Picture"
+                onChange={(e) => setProfile(e.target.value)}
+                contentLeft={<Profile fill="currentColor" />}
+              />
             </Modal.Body>
             <Modal.Footer>
               <Button auto flat color="error" onClick={closeHandler}>
                 Close
               </Button>
               <Button
-                onClick={() => registerUser({ username, email, password })}
+                onClick={() =>
+                  registerUser({ username, email, password, fullname, profile })
+                }
                 flat
                 type="submit"
                 auto
