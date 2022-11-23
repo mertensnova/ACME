@@ -1,6 +1,15 @@
 import React, { useState } from "react";
-import { Modal, Button, Text, Textarea } from "@nextui-org/react";
+import {
+  Modal,
+  css,
+  Button,
+  Text,
+  Textarea,
+  Container,
+} from "@nextui-org/react";
 import { API_URL } from "../pages/api/url";
+import Pen from "./icons/Pen";
+import { addPost } from "../pages/api/post";
 
 export default function AddPostModal() {
   const handler = () => setVisible(true);
@@ -14,19 +23,42 @@ export default function AddPostModal() {
 
   return (
     <>
+      {/* <Container css={{ position: "relative" }}> */}
       <form
-        // onSubmit={() => registerUser({ content })}
+        onSubmit={() => addPost({ content })}
         action={`${API_URL}/register`}
         method="POST"
+        id="postform"
         // encType="multipart/form-data"
       >
         <div>
-          <Button auto flat onClick={handler}>
-            Write
+          <style jsx>{` 
+          div {
+            position: relative;
+            }
+            
+            }
+          `}</style>
+          <Button
+            css={{
+              position: "fixed",
+              bottom: 100,
+              right: 160,
+              borderRadius: 9999,
+              width: "60px",
+              height: "60px",
+            }}
+            auto
+            flat
+            color={"primary"}
+            onClick={handler}
+          >
+            <Pen fill="currentColor" />
           </Button>
           <Modal
             blur
             closeButton
+            width="500px"
             aria-labelledby="modal-title"
             open={visible}
             onClose={closeHandler}
@@ -45,7 +77,8 @@ export default function AddPostModal() {
                 color="primary"
                 size="lg"
                 placeholder="Content"
-                labelPlaceholder="Bordered Textarea"
+                form="postform"
+                onChange={(e) => setContent(e.target.value)}
               />
             </Modal.Body>
             <Modal.Footer>
@@ -53,9 +86,7 @@ export default function AddPostModal() {
                 Close
               </Button>
               <Button
-                // onClick={() =>
-                //   registerUser({ username, email, password, fullname, profile })
-                // }
+                onClick={() => addPost({ content })}
                 flat
                 type="submit"
                 auto
@@ -67,6 +98,7 @@ export default function AddPostModal() {
           </Modal>
         </div>
       </form>
+      {/* </Container> */}
     </>
   );
 }

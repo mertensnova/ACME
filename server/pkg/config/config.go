@@ -3,7 +3,7 @@ package config
 import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-  )
+)
   
 
 var (
@@ -12,7 +12,7 @@ var (
 
 func Connect()  {
 
-	dsn := "host=containers-us-west-123.railway.app user=postgres password=zucMHo0h1izZ6tBq6WkS dbname=railway port=6256 sslmode=disable"
+	dsn := "user=postgres password=bSHNLx5YqiMaOzuo host=db.wegkjexhqkunpdcjncex.supabase.co port=5432 dbname=postgres"
 	d, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {

@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"server/pkg/models"
 
@@ -13,6 +14,7 @@ func AddPost(c echo.Context) error {
 	err := c.Bind(&posts); if err != nil {
 		return c.String(http.StatusBadRequest, "bad request")
 	}
+	fmt.Println(c.Request())
 
   	post := models.Posts{
 	Content: posts.Content,

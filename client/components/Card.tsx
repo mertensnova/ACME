@@ -1,8 +1,27 @@
 import { Card, Grid, Text, Container, Spacer, Button } from "@nextui-org/react";
 import React from "react";
 import Like from "./icons/Like";
+import ViewPost from "./ViewPost";
 
 export default function PostCard() {
+  let read = false;
+  const text =
+    ` Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+  eiusmod tempor incididunt ut labore et dolore magna aliqua. Purus
+  gravida quis blandit turpis. Augue neque gravida in fermentum et
+  sollicitudin ac orci. Et sollicitudin ac orci phasellus egestas.
+  Elementum tempus egestas sed sed risus pretium quam vulputate.
+  Interdum velit euismod in pellentesque massa placerat duis
+  ultricies.` ?? "";
+  const truncateString = (str: any, num: any) => {
+    if (str?.length > num) {
+      let subStr = str.substring(0, num);
+      read = true;
+      return subStr;
+    } else {
+      return str;
+    }
+  };
   return (
     <>
       <Spacer y={2} />
@@ -27,15 +46,8 @@ export default function PostCard() {
             </Grid.Container>
           </Card.Header>
           <Card.Body css={{ py: "$2" }}>
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Purus
-              gravida quis blandit turpis. Augue neque gravida in fermentum et
-              sollicitudin ac orci. Et sollicitudin ac orci phasellus egestas.
-              Elementum tempus egestas sed sed risus pretium quam vulputate.
-              Interdum velit euismod in pellentesque massa placerat duis
-              ultricies.
-            </Text>
+            <Text>{truncateString(text, 220)}</Text>
+            {read ? <ViewPost /> : ""}
           </Card.Body>
           <Card.Footer>
             <Button size="sm" color={"primary"} auto ghost>
