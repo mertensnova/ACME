@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"server/pkg/config"
 
 	"gorm.io/gorm"
@@ -21,7 +20,13 @@ func init()  {
 }
 
 func (post *Posts) AddPost() *Posts{
-	fmt.Println(post)
 	db.Create(&post) 
 	return post 
+}
+
+
+func GetAllPosts() []Posts{
+	var Posts []Posts
+	db.Find(&Posts)
+    return Posts
 }

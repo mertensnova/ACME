@@ -22,7 +22,8 @@ func AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		_, ok := session.Values["userID"]
 
 		if strings.Split(c.Path(),"/")[1] == "login" ||
-		 strings.Split(c.Path(),"/")[1] == "register"{
+		 strings.Split(c.Path(),"/")[1] == "register"|| 
+		 strings.Split(c.Path(),"/")[1] == "dashboard" {
 			return next(c)
 		}
 		

@@ -34,7 +34,7 @@ func main() {
 
 	// Post Routes
 	app.POST("/add-post",handlers.AddPost)
-	// app.DELETE("/delete/:id", handlers.LoginUser)
+	app.GET("/dashboard", handlers.GetAllPosts)
 	// app.GET("/getposts", handlers.Logout)
 
 	app.Logger.Fatal(app.Start(":8080"))
