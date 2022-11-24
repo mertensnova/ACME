@@ -2,7 +2,7 @@ import Head from "next/head";
 import { Navbar, Button, Link, Text } from "@nextui-org/react";
 import { AcmeLogo } from "../components/icons/Logo";
 import SignInModal from "../components/SignInModal";
-import LoginModal from "../public/LoginModal";
+import LoginModal from "../components/LoginModal";
 
 export default function Home() {
   return (

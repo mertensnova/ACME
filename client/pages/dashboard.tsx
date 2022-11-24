@@ -13,6 +13,8 @@ export default function Dashboard() {
     console.log("You are on the server");
   }
 
+  console.log(process.env.ENV);
+
   return (
     <>
       <Navbar isBordered variant="sticky">

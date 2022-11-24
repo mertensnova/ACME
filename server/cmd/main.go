@@ -38,4 +38,5 @@ func main() {
 	// app.GET("/getposts", handlers.Logout)
 
 	app.Logger.Fatal(app.Start(":8080"))
+	
 }
