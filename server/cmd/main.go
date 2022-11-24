@@ -25,16 +25,16 @@ func main() {
 	
    
 	// Auth Routes
-	app.POST("/register",handlers.RegisterUser)
-	app.POST("/login", handlers.LoginUser)
-	app.GET("/logout", handlers.Logout)
-	app.GET("/users",handlers.GetAllUsers)
-	app.GET("/user/:id",handlers.GetUserById)
-	app.DELETE("/user/:id",handlers.DeleteUser)
+	app.POST("https://social-media-amr8644.vercel.app/register",handlers.RegisterUser)
+	app.POST("https://social-media-amr8644.vercel.app/login", handlers.LoginUser)
+	app.GET("https://social-media-amr8644.vercel.app/logout", handlers.Logout)
+	app.GET("https://social-media-amr8644.vercel.app/users",handlers.GetAllUsers)
+	app.GET("https://social-media-amr8644.vercel.app/user/:id",handlers.GetUserById)
+	app.DELETE("https://social-media-amr8644.vercel.app/user/:id",handlers.DeleteUser)
 
 	// Post Routes
-	app.POST("/add-post",handlers.AddPost)
-	app.GET("/dashboard", handlers.GetAllPosts)
+	app.POST("https://social-media-amr8644.vercel.app/add-post",handlers.AddPost)
+	app.GET("https://social-media-amr8644.vercel.app/dashboard", handlers.GetAllPosts)
 	// app.GET("/getposts", handlers.Logout)
 
 	app.Logger.Fatal(app.Start(":8080"))
