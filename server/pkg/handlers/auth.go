@@ -23,7 +23,8 @@ func AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 
 		if strings.Split(c.Path(),"/")[1] == "login" ||
 		 strings.Split(c.Path(),"/")[1] == "register"|| 
-		 strings.Split(c.Path(),"/")[1] == "dashboard" {
+		 strings.Split(c.Path(),"/")[1] == "dashboard"||
+		 strings.Split(c.Path(),"/")[1] == "add-post"  {
 			return next(c)
 		}
 		
