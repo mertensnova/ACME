@@ -1,11 +1,35 @@
-import { Card, Grid, Text, Container, Spacer, Button } from "@nextui-org/react";
+import {
+  Card,
+  Grid,
+  Text,
+  Container,
+  Spacer,
+  Button,
+  Loading,
+} from "@nextui-org/react";
 import React from "react";
 import ViewPost from "./ViewPost";
+import { getAllPosts } from "../pages/api/post";
+import { useQuery } from "react-query";
 
-export default function PostCard({ posts }: any) {
-  // console.log(posts);
-
+export default function PostCard() {
   let read = false;
+  const { data, isLoading, isError } = useQuery("posts", getAllPosts);
+
+  let user;
+  if (typeof window !== "undefined") {
+    user = JSON.parse(localStorage.getItem("user") ?? "");
+  } else {
+    console.log("You are on the server");
+  }
+
+  if (isLoading) {
+    return (
+      <Container fluid display="flex" alignItems="center" justify="center">
+        <Loading />
+      </Container>
+    );
+  }
 
   const truncateString = (str: any, num: any) => {
     if (str?.length > num) {
@@ -16,11 +40,11 @@ export default function PostCard({ posts }: any) {
       return str;
     }
   };
+
   return (
     <>
-      {posts.map((e: any) => {
+      {data?.map((e: any) => {
         const { ID, content, userid, like } = e;
-        // const text = content ?? "";
         return (
           <>
             <Spacer y={2} />

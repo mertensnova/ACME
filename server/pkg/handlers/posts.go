@@ -13,7 +13,7 @@ func AddPost(c echo.Context) error {
 	err := c.Bind(&posts); if err != nil {
 		return c.String(http.StatusBadRequest, "bad request")
 	}
-
+	
   	post := models.Posts{
 	Content: posts.Content,
 	Likes: posts.Likes,

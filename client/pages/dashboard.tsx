@@ -4,11 +4,8 @@ import PostCard from "../components/Card";
 import { AcmeLogo } from "../components/icons/Logo";
 import { SearchIcon } from "../components/icons/SearchIcon";
 import { logout } from "./api/auth";
-import axios from "axios";
-import { API_URL } from "../pages/api/url";
-import { GetStaticProps } from "next";
 
-export default function Dashboard({ posts }: any) {
+export default function Dashboard() {
   let user;
   if (typeof window !== "undefined") {
     user = JSON.parse(localStorage.getItem("user") ?? "");
@@ -103,22 +100,9 @@ export default function Dashboard({ posts }: any) {
           </Dropdown>
         </Navbar.Content>
       </Navbar>
-      <PostCard posts={posts} />
+      <PostCard />
 
       <AddPostModal />
     </>
   );
 }
-
-export const getStaticProps: GetStaticProps = async ({ params }: any) => {
-  const res = await axios.get(`${API_URL}/dashboard`, {
-    withCredentials: true,
-  });
-
-  // Here, I'm returning an error property in the props object, but you can choose to return something else that suits your need.
-  return {
-    props: {
-      posts: res.data,
-    },
-  };
-};

@@ -1,19 +1,22 @@
 import React, { useState } from "react";
-import {
-  Modal,
-  css,
-  Button,
-  Text,
-  Textarea,
-  Container,
-} from "@nextui-org/react";
+import { Modal, Button, Text, Textarea } from "@nextui-org/react";
 import { API_URL } from "../pages/api/url";
 import Pen from "./icons/Pen";
 import { addPost } from "../pages/api/post";
+import { useMutation, useQueryClient } from "react-query";
 
 export default function AddPostModal() {
   const handler = () => setVisible(true);
   const [visible, setVisible] = React.useState(false);
+  const queryClient = useQueryClient();
+
+  let user;
+  if (typeof window !== "undefined") {
+    user = JSON.parse(localStorage.getItem("user") ?? "");
+  } else {
+    console.log("You are on the server");
+  }
+  const userid = user?.ID;
 
   const [content, setContent] = useState("");
 
@@ -21,22 +24,19 @@ export default function AddPostModal() {
     setVisible(false);
   };
 
+  const addPostMutation = useMutation(addPost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("posts");
+    },
+  });
+
   return (
     <>
-      {/* <Container css={{ position: "relative" }}> */}
-      <form
-        onSubmit={() => addPost({ content })}
-        action={`${API_URL}/register`}
-        method="POST"
-        id="postform"
-        // encType="multipart/form-data"
-      >
+      <form action={`${API_URL}/register`} method="POST" id="postform">
         <div>
-          <style jsx>{` 
-          div {
-            position: relative;
-            }
-            
+          <style jsx>{`
+            div {
+              position: relative;
             }
           `}</style>
           <Button
@@ -86,7 +86,10 @@ export default function AddPostModal() {
                 Close
               </Button>
               <Button
-                onClick={() => addPost({ content })}
+                onClick={() => {
+                  closeHandler();
+                  addPostMutation.mutate({ id: userid, content: content });
+                }}
                 flat
                 type="submit"
                 auto
@@ -98,7 +101,6 @@ export default function AddPostModal() {
           </Modal>
         </div>
       </form>
-      {/* </Container> */}
     </>
   );
 }
