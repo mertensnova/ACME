@@ -5,7 +5,7 @@ import { API_URL } from "../pages/api/url";
 import User from "../components/icons/User";
 import { loginUser } from "../pages/api/auth";
 
-export default function SignInModal() {
+export default function LoginModal() {
   const [visible, setVisible] = React.useState(false);
   const handler = () => setVisible(true);
   const [username, setUsername] = useState("");
