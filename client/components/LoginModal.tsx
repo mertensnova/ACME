@@ -22,7 +22,10 @@ export default function LoginModal() {
           Login
         </Button>
         <form
-          onSubmit={() => loginUser({ username, password })}
+          onSubmit={(e: any) => {
+            e.preventDefault();
+            loginUser({ username, password });
+          }}
           action={`${API_URL}/login`}
           method="POST"
           id="loginform"

@@ -24,9 +24,10 @@ export default function SignInModal() {
   return (
     <>
       <form
-        onSubmit={() =>
-          registerUser({ username, email, password, fullname, profile })
-        }
+        onSubmit={(e: any) => {
+          e.preventDefault();
+          registerUser({ username, email, password, fullname, profile });
+        }}
         action={`${API_URL}/register`}
         method="POST"
         encType="multipart/form-data"
