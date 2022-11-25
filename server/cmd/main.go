@@ -21,7 +21,7 @@ func main() {
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	  }))
 	app.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
-	app.Use(handlers.AuthMiddleware)
+	// app.Use(handlers.AuthMiddleware)
 	
    
 	// Auth Routes
