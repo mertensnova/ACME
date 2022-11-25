@@ -30,6 +30,7 @@ export default function SignInModal() {
         action={`${API_URL}/register`}
         method="POST"
         encType="multipart/form-data"
+        id="signform"
       >
         <div>
           <Button auto flat onClick={handler}>
@@ -122,14 +123,7 @@ export default function SignInModal() {
               <Button auto flat color="error" onClick={closeHandler}>
                 Close
               </Button>
-              <Button
-                onClick={() =>
-                  registerUser({ username, email, password, fullname, profile })
-                }
-                flat
-                type="submit"
-                auto
-              >
+              <Button form="signform" flat type="submit" auto>
                 Sign in
               </Button>
             </Modal.Footer>

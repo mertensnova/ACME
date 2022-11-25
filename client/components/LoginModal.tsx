@@ -25,6 +25,7 @@ export default function LoginModal() {
           onSubmit={() => loginUser({ username, password })}
           action={`${API_URL}/login`}
           method="POST"
+          id="loginform"
         >
           <Modal
             closeButton
@@ -82,11 +83,7 @@ export default function LoginModal() {
               <Button auto flat color="error" onClick={closeHandler}>
                 Close
               </Button>
-              <Button
-                onClick={() => loginUser({ username, password })}
-                type="submit"
-                auto
-              >
+              <Button type="submit" auto form="loginform">
                 Login
               </Button>
             </Modal.Footer>

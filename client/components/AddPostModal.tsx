@@ -4,6 +4,8 @@ import { API_URL } from "../pages/api/url";
 import Pen from "./icons/Pen";
 import { addPost } from "../pages/api/post";
 import { useMutation, useQueryClient } from "react-query";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AddPostModal() {
   const handler = () => setVisible(true);
@@ -29,32 +31,42 @@ export default function AddPostModal() {
       queryClient.invalidateQueries("posts");
     },
   });
+  // const handleSubmit = (e: any) => {
+  //   e.preventDefault();
+  //   addPostMutation.mutate({ userid: userid, content: content });
+  // };
 
   return (
     <>
-      <form action={`${API_URL}/register`} method="POST" id="postform">
-        <div>
-          <style jsx>{`
-            div {
-              position: relative;
-            }
-          `}</style>
-          <Button
-            css={{
-              position: "fixed",
-              bottom: 100,
-              right: 160,
-              borderRadius: 9999,
-              width: "60px",
-              height: "60px",
-            }}
-            auto
-            flat
-            color={"primary"}
-            onClick={handler}
-          >
-            <Pen fill="currentColor" />
-          </Button>
+      <ToastContainer />
+      <div>
+        <style jsx>{`
+          div {
+            position: relative;
+          }
+        `}</style>
+        <Button
+          css={{
+            position: "fixed",
+            bottom: 100,
+            right: 160,
+            borderRadius: 9999,
+            width: "60px",
+            height: "60px",
+          }}
+          auto
+          flat
+          color={"primary"}
+          onClick={handler}
+        >
+          <Pen fill="currentColor" />
+        </Button>
+        <form
+          // onSubmit={handleSubmit}
+          action={`${API_URL}/add-post`}
+          method="POST"
+          id="postform"
+        >
           <Modal
             blur
             closeButton
@@ -86,12 +98,12 @@ export default function AddPostModal() {
                 Close
               </Button>
               <Button
-                onClick={() => {
+                form="postform"
+                onPress={() => {
                   closeHandler();
-                  addPostMutation.mutate({ id: userid, content: content });
+                  addPostMutation.mutate({ userid: userid, content: content });
                 }}
                 flat
-                type="submit"
                 auto
                 color={"success"}
               >
@@ -99,8 +111,8 @@ export default function AddPostModal() {
               </Button>
             </Modal.Footer>
           </Modal>
-        </div>
-      </form>
+        </form>
+      </div>
     </>
   );
 }

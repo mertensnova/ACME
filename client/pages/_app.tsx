@@ -8,9 +8,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <NextUIProvider>
-        <Hydrate state={pageProps.dehydratedState}>
+        {/* <Hydrate state={pageProps.dehydratedState}> */}
           <Component {...pageProps} />
-        </Hydrate>
+        {/* </Hydrate> */}
       </NextUIProvider>
     </QueryClientProvider>
   );

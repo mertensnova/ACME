@@ -1,17 +1,23 @@
 import axios from "axios";
 import { API_URL } from "./url";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export const addPost = async ({ content, id }: any) => {
+export const addPost = async ({ content, userid }: any) => {
+  const notify = () =>
+    toast.success("Post added", {
+      theme: "dark",
+    });
   try {
     const response = await axios.post(
       `${API_URL}/add-post`,
       {
-        id,
+        userid,
         content,
       },
       { withCredentials: true }
     );
-    console.log(response.data);
+    notify();
 
     return response;
   } catch (error) {

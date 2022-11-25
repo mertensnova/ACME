@@ -1,5 +1,7 @@
 import axios from "axios";
 import { API_URL } from "./url";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const registerUser = async ({
   username,
@@ -9,6 +11,10 @@ export const registerUser = async ({
   profile,
 }: any) => {
   try {
+    const notify = () =>
+      toast.success("Registered successfully", {
+        theme: "dark",
+      });
     const response = await axios.post(
       `${API_URL}/register`,
       {
@@ -23,6 +29,7 @@ export const registerUser = async ({
     if (response.status === 200) {
       localStorage.setItem("user", JSON.stringify(response.data));
       window.location.href = "/dashboard";
+      notify();
     }
     return response.data;
   } catch (error: any) {
@@ -31,6 +38,10 @@ export const registerUser = async ({
 };
 
 export const loginUser = async ({ username, password }: any) => {
+  const notify = () =>
+    toast.success("Login successfull", {
+      theme: "dark",
+    });
   try {
     const response = await axios.post(
       `${API_URL}/login`,
@@ -43,6 +54,7 @@ export const loginUser = async ({ username, password }: any) => {
     if (response.status === 200) {
       localStorage.setItem("user", JSON.stringify(response.data));
       window.location.href = "/dashboard";
+      notify();
     }
     return response.data;
   } catch (error: any) {
