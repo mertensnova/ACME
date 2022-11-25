@@ -12,6 +12,10 @@ export default function AddPostModal() {
   const [visible, setVisible] = React.useState(false);
   const queryClient = useQueryClient();
 
+  console.log(API_URL);
+
+  console.log(process.env.NODE_ENV);
+
   let user;
   if (typeof window !== "undefined") {
     user = JSON.parse(localStorage.getItem("user") ?? "");
