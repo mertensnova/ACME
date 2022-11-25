@@ -58,7 +58,7 @@ export const loginUser = async ({ username, password }: any) => {
     }
     return response.data;
   } catch (error: any) {
-    console.log(error);
+    console.log(error.message);
   }
 };
 
