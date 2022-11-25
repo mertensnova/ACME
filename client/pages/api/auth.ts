@@ -42,7 +42,7 @@ export const loginUser = async ({ username, password }: any) => {
     toast.success("Login successfull", {
       theme: "dark",
     });
-  const error = () =>
+  const failure = () =>
     toast.error("Invalid Credntials", {
       theme: "dark",
     });
@@ -63,7 +63,7 @@ export const loginUser = async ({ username, password }: any) => {
     return response.data;
   } catch (error: any) {
     if (error.message == "Request failed with status code 403") {
-      error();
+      failure();
     }
     console.log(error.message);
   }
