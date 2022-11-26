@@ -10,7 +10,8 @@ type Posts struct{
 	gorm.Model
     Content string `form:"content" json:"content"`
     Likes int `json:"likes"`
-	UserID  uint `json:"userid"`
+	UserID uint64 `json:"user_id"`
+	User *Users
 }
 
 func init()  {
@@ -20,20 +21,17 @@ func init()  {
 }
 
 func (post *Posts) AddPost() *Posts{
-	db.Create(&post) 
+	db.Create(&Posts{
+		Content: post.Content,
+		Likes: 0,
+		UserID: post.UserID,
+		User:GetUserById(post.UserID),
+	}) 
 	return post 
 }
 
 func GetAllPosts() []Posts{
-	// Posts[0].ID
 	var Posts []Posts
-	// var Post []Posts
-
 	db.Find(&Posts)
-	// var user Users
-	// db.Model(&user).Association("Posts")
-	// db.Model(&user).Association("Posts").Find(&Posts)
-	// fmt.Println(Posts)
-	
     return Posts 
 }

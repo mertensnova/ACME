@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"server/pkg/models"
 
@@ -14,11 +15,14 @@ func AddPost(c echo.Context) error {
 		return c.String(http.StatusBadRequest, "bad request")
 	}
 
-	
+	fmt.Println(posts.UserID)
+
+
   	post := models.Posts{
 	Content: posts.Content,
 	Likes: posts.Likes,
-	UserID: posts.AddPost().UserID,
+	UserID: posts.UserID,
+	User: models.GetUserById(posts.UserID),
   	}
 
 	// Add to database

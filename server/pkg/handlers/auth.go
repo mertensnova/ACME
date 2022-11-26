@@ -135,11 +135,15 @@ func GetAllUsers(c echo.Context) error {
 	return c.JSON(http.StatusOK,allUsers)
 }
 
-func GetUserById(c echo.Context) error {
-	id := c.Param("id")
-	userData, _ := models.GetUserById(id)
-	return c.JSON(http.StatusOK,userData)
-}
+// func GetUserById(c echo.Context) error {
+// 	ID := c.Param("id")
+// 	id ,err:= strconv.ParseUint(ID,10,64)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 	}
+// 	userData:= models.GetUserById(id)
+// 	return c.JSON(http.StatusOK,userData)
+// }
 
 func DeleteUser(c echo.Context) error {
 	id := c.Param("id")

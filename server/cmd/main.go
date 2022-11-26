@@ -29,13 +29,12 @@ func main() {
 	app.POST("/login", handlers.LoginUser)
 	app.GET("/logout", handlers.Logout)
 	app.GET("/users",handlers.GetAllUsers)
-	app.GET("/user/:id",handlers.GetUserById)
+	// app.GET("/user/:id",handlers.GetUserById)
 	app.DELETE("/user/:id",handlers.DeleteUser)
 
 	// Post Routes
 	app.POST("/add-post",handlers.AddPost)
 	app.GET("/dashboard", handlers.GetAllPosts)
-	// app.GET("/getposts", handlers.Logout)
 
 	app.Logger.Fatal(app.Start(":8080"))
 	
