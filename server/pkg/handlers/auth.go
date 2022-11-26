@@ -29,11 +29,11 @@ func AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		}
 		
 		if !ok {
-			http.Redirect(c.Response(),c.Request(),"https://social-media-amr8644.vercel.app/",http.StatusFound)
+			http.Redirect(c.Response(),c.Request(),"/",http.StatusFound)
 			return c.String(http.StatusForbidden, "Unauthorized")
 		}
 		if session.Values["authenticated"] == false{
-			http.Redirect(c.Response(),c.Request(),"https://social-media-amr8644.vercel.app/",http.StatusFound)
+			http.Redirect(c.Response(),c.Request(),"/",http.StatusFound)
 			return c.String(http.StatusForbidden, "Unauthorized")
 		}
 		return next(c)
@@ -54,8 +54,7 @@ func RegisterUser(c echo.Context) error {
     Username: u.Username,
     Password: hash,
     Email: u.Email,
-	// Profile: fileByte,
-	Posts: u.Posts,
+	
   	}
 
 	// Add to database

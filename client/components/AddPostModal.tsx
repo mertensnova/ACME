@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Modal, Button, Text, Textarea } from "@nextui-org/react";
 import { API_URL } from "../pages/api/url";
 import Pen from "./icons/Pen";
-import { addPost } from "../pages/api/post";
-import { useMutation, useQueryClient } from "react-query";
+import { addPost, getAllPosts } from "../pages/api/post";
+import { useMutation, useQueryClient, useQuery } from "react-query";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,10 +11,6 @@ export default function AddPostModal() {
   const handler = () => setVisible(true);
   const [visible, setVisible] = React.useState(false);
   const queryClient = useQueryClient();
-
-  console.log(API_URL);
-
-  console.log(process.env.NODE_ENV);
 
   let user;
   if (typeof window !== "undefined") {
@@ -29,12 +25,14 @@ export default function AddPostModal() {
   const closeHandler = () => {
     setVisible(false);
   };
+  const { data, isLoading, isError } = useQuery("posts", getAllPosts);
 
   const addPostMutation = useMutation(addPost, {
     onSuccess: () => {
       queryClient.invalidateQueries("posts");
     },
   });
+
   // const handleSubmit = (e: any) => {
   //   e.preventDefault();
   //   addPostMutation.mutate({ userid: userid, content: content });
@@ -103,7 +101,7 @@ export default function AddPostModal() {
               </Button>
               <Button
                 form="postform"
-                onPress={() => {
+                onClick={() => {
                   closeHandler();
                   addPostMutation.mutate({ userid: userid, content: content });
                 }}

@@ -18,7 +18,7 @@ func AddPost(c echo.Context) error {
   	post := models.Posts{
 	Content: posts.Content,
 	Likes: posts.Likes,
-	UserID: posts.UserID,
+	UserID: posts.AddPost().UserID,
   	}
 
 	// Add to database

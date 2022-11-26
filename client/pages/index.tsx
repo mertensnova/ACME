@@ -1,12 +1,5 @@
 import Head from "next/head";
-import {
-  Navbar,
-  Button,
-  Link,
-  Text,
-  Container,
-  Image,
-} from "@nextui-org/react";
+import { Navbar, Text, Container, Image } from "@nextui-org/react";
 import { AcmeLogo } from "../components/icons/Logo";
 import SignInModal from "../components/SignInModal";
 import LoginModal from "../components/LoginModal";
@@ -29,7 +22,6 @@ export default function Home() {
         <Navbar.Content hideIn="xs"></Navbar.Content>
         <Navbar.Content>
           <LoginModal />
-
           <Navbar.Item>
             <SignInModal />
           </Navbar.Item>
