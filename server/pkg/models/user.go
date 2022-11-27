@@ -41,11 +41,11 @@ func GetAllUsers() []Users{
     return Users
 }
 
-func GetUserById(id uint64) *Users{
-    var getUser Users
-	db.Where("ID=?",id).Find(&getUser)
-	fmt.Println(getUser)
-	return &getUser
+func GetUserById(id uint64) []Users{
+    var getUser []Users
+	fmt.Println(id)
+	db.Preload("Posts").Find(&getUser)
+	return getUser
 }
 
 func DeleteUser(id string) Users{

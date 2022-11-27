@@ -19,7 +19,6 @@ export default function AddPostModal() {
     console.log("You are on the server");
   }
   const userid = user?.ID;
-
   const [content, setContent] = useState("");
 
   const closeHandler = () => {
@@ -32,11 +31,6 @@ export default function AddPostModal() {
       queryClient.invalidateQueries("posts");
     },
   });
-
-  // const handleSubmit = (e: any) => {
-  //   e.preventDefault();
-  //   addPostMutation.mutate({ userid: userid, content: content });
-  // };
 
   return (
     <>

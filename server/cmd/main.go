@@ -34,6 +34,7 @@ func main() {
 
 	// Post Routes
 	app.POST("/add-post",handlers.AddPost)
+	// app.GET("/user/:id",handlers.GetUserById)
 	app.GET("/dashboard", handlers.GetAllPosts)
 
 	app.Logger.Fatal(app.Start(":8080"))
