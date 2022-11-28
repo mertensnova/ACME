@@ -1,8 +1,9 @@
 import Head from "next/head";
-import { Navbar, Text, Container, Image } from "@nextui-org/react";
+import { Navbar, Text, Container } from "@nextui-org/react";
 import { AcmeLogo } from "../components/icons/Logo";
 import SignInModal from "../components/SignInModal";
 import LoginModal from "../components/LoginModal";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -29,11 +30,10 @@ export default function Home() {
       </Navbar>
       <Container>
         <Image
-          width={320}
-          height={180}
-          src="../public/pexels-eberhard-grossgasteiger-1292115.jpg"
-          alt="Default Image"
-          objectFit="cover"
+          width={2000}
+          height={500}
+          src="/pexels-eberhard-grossgasteiger-1292115.jpg"
+          alt="Picture of the author"
         />
       </Container>
     </>

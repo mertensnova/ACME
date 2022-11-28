@@ -11,7 +11,6 @@ type Posts struct{
     Content string `form:"content" json:"content"`
     Likes int `json:"likes"`
 	UserID uint64 `json:"userid"`
-	// User *Users
 }
 
 func init()  {

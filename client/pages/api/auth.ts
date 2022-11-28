@@ -42,10 +42,7 @@ export const loginUser = async ({ username, password }: any) => {
     toast.success("Login successfull", {
       theme: "dark",
     });
-  const failure = () =>
-    toast.error("Invalid Credntials", {
-      theme: "dark",
-    });
+
   try {
     const response = await axios.post(
       `${API_URL}/login`,
@@ -62,10 +59,7 @@ export const loginUser = async ({ username, password }: any) => {
     }
     return response.data;
   } catch (error: any) {
-    if (error.message == "Request failed with status code 403") {
-      failure();
-    }
-    console.log(error.message);
+    alert(`Invalid Credntials!`);
   }
 };
 
