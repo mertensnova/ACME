@@ -15,7 +15,7 @@ type Users struct{
     Username string `gorm:"unique" form:"Username" json:"username"`
     Password string `form:"Password" json:"password"`
     Email    string  `gorm:"unique" form:"Email" json:"email"`
-	Profile []byte 	`form:"Profile" json:"profile"`
+	Profile string 	`form:"Profile" json:"profile"`
 	Posts []Posts  	`gorm:"foreignKey:UserID;references:ID"`
 }
 

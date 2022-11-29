@@ -4,74 +4,82 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const registerUser = async ({
-  username,
-  email,
-  password,
-  fullname,
-  profile,
+   username,
+   email,
+   password,
+   fullname,
+   profile,
 }: any) => {
-  try {
-    const notify = () =>
-      toast.success("Registered successfully", {
-        theme: "dark",
-      });
-    const response = await axios.post(
-      `${API_URL}/register`,
-      {
-        username,
-        email,
-        password,
-        fullname,
-        profile,
-      },
-      { withCredentials: true }
-    );
-    if (response.status === 200) {
-      localStorage.setItem("user", JSON.stringify(response.data));
-      window.location.href = "/dashboard";
-      notify();
-    }
-    return response.data;
-  } catch (error: any) {
-    console.log(error);
-  }
+   try {
+      const notify = () =>
+         toast.success("Registered successfully", {
+            theme: "dark",
+         });
+      const response = await axios.post(
+         `${API_URL}/register`,
+         {
+            username,
+            email,
+            password,
+            fullname,
+            profile,
+         },
+         { withCredentials: true }
+      );
+      if (response.status === 200) {
+         localStorage.setItem("user", JSON.stringify(response.data));
+         window.location.href = "/dashboard";
+         notify();
+      }
+      return response.data;
+   } catch (error: any) {
+      console.log(error);
+   }
 };
 
 export const loginUser = async ({ username, password }: any) => {
-  const notify = () =>
-    toast.success("Login successfull", {
-      theme: "dark",
-    });
+   const notify = () =>
+      toast.success("Login successfull", {
+         theme: "dark",
+      });
 
-  try {
-    const response = await axios.post(
-      `${API_URL}/login`,
-      {
-        username,
-        password,
-      },
-      { withCredentials: true }
-    );
-    if (response.status === 200) {
-      localStorage.setItem("user", JSON.stringify(response.data));
-      window.location.href = "/dashboard";
-      notify();
-    }
-    return response.data;
-  } catch (error: any) {
-    alert(`Invalid Credntials!`);
-  }
+   try {
+      const response = await axios.post(
+         `${API_URL}/login`,
+         {
+            username,
+            password,
+         },
+         { withCredentials: true }
+      );
+      if (response.status === 200) {
+         localStorage.setItem("user", JSON.stringify(response.data));
+         window.location.href = "/dashboard";
+         notify();
+      }
+      return response.data;
+   } catch (error: any) {
+      alert(`Invalid Credntials!`);
+   }
 };
 
 export const logout = async () => {
-  try {
-    const resp = await axios.get(`${API_URL}/logout`, {
-      withCredentials: true,
-    });
-    window.location.href = "/";
+   try {
+      const resp = await axios.get(`${API_URL}/logout`, {
+         withCredentials: true,
+      });
+      window.location.href = "/";
 
-    return resp;
-  } catch (error) {
-    console.log(error);
-  }
+      return resp;
+   } catch (error) {
+      console.log(error);
+   }
 };
+
+export let user: any;
+
+if (typeof window !== "undefined") {
+   user = JSON.parse(localStorage.getItem("user") ?? "");
+} else {
+   console.log("You are on the server");
+}

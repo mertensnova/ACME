@@ -5,6 +5,9 @@ import (
 	"server/pkg/models"
 	"server/pkg/utils"
 	"strings"
+	"os"
+	"io"
+	"ioutil"
 
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
@@ -49,12 +52,32 @@ func RegisterUser(c echo.Context) error {
 	// Hash password
 	hash, _ := utils.HashPassword(u.Password)
 
+	file, err := c.FormFile("profile")
+	if err != nil {
+		return err
+	}
+	// Create a temporary file within our temp-images directory that follows
+    // a particular naming pattern
+    tempFile, err := ioutil.TempFile("temp-images", "upload-*.png")
+    if err != nil {
+        fmt.Println(err)
+    }
+    defer tempFile.Close()
+
+    // read all of the contents of our uploaded file into a
+    // byte array
+    fileBytes, err := ioutil.ReadAll(file)
+    if err != nil {
+        fmt.Println(err)
+    }
+    // write this byte array to our temporary file
+    tempFile.Write(fileBytes)
+
   	user := models.Users{
 	Fullname: u.Fullname,
     Username: u.Username,
     Password: hash,
     Email: u.Email,
-	
   	}
 
 	// Add to database
@@ -134,16 +157,6 @@ func GetAllUsers(c echo.Context) error {
 	allUsers := models.GetAllUsers()
 	return c.JSON(http.StatusOK,allUsers)
 }
-
-// func GetUserById(c echo.Context) error {
-// 	ID := c.Param("id")
-// 	id ,err:= strconv.ParseUint(ID,10,64)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 	}
-// 	userData:= models.GetUserById(id)
-// 	return c.JSON(http.StatusOK,userData)
-// }
 
 func DeleteUser(c echo.Context) error {
 	id := c.Param("id")
