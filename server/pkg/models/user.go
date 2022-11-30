@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"server/pkg/config"
 
 	"gorm.io/gorm"
@@ -43,10 +42,11 @@ func GetAllUsers() []Users{
 
 func GetUserById(id uint64) []Users{
     var getUser []Users
-	fmt.Println(id)
-	db.Preload("Posts").Find(&getUser)
+	db.Where("ID=?",id).Find(&getUser)
 	return getUser
 }
+
+
 
 func DeleteUser(id string) Users{
     var deleteUser Users

@@ -4,10 +4,8 @@ import (
 	"net/http"
 	"server/pkg/models"
 	"server/pkg/utils"
+	"strconv"
 	"strings"
-	"os"
-	"io"
-	"ioutil"
 
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
@@ -25,9 +23,7 @@ func AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		_, ok := session.Values["userID"]
 
 		if strings.Split(c.Path(),"/")[1] == "login" ||
-		 strings.Split(c.Path(),"/")[1] == "register"|| 
-		 strings.Split(c.Path(),"/")[1] == "dashboard"||
-		 strings.Split(c.Path(),"/")[1] == "add-post"  {
+		 strings.Split(c.Path(),"/")[1] == "register"{
 			return next(c)
 		}
 		
@@ -52,27 +48,7 @@ func RegisterUser(c echo.Context) error {
 	// Hash password
 	hash, _ := utils.HashPassword(u.Password)
 
-	file, err := c.FormFile("profile")
-	if err != nil {
-		return err
-	}
-	// Create a temporary file within our temp-images directory that follows
-    // a particular naming pattern
-    tempFile, err := ioutil.TempFile("temp-images", "upload-*.png")
-    if err != nil {
-        fmt.Println(err)
-    }
-    defer tempFile.Close()
-
-    // read all of the contents of our uploaded file into a
-    // byte array
-    fileBytes, err := ioutil.ReadAll(file)
-    if err != nil {
-        fmt.Println(err)
-    }
-    // write this byte array to our temporary file
-    tempFile.Write(fileBytes)
-
+	
   	user := models.Users{
 	Fullname: u.Fullname,
     Username: u.Username,
@@ -156,6 +132,15 @@ func Logout(c echo.Context) error {
 func GetAllUsers(c echo.Context) error {
 	allUsers := models.GetAllUsers()
 	return c.JSON(http.StatusOK,allUsers)
+}
+
+func GetUserById(c echo.Context) error {
+	id,err := strconv.ParseUint(c.Param("id"), 10, 64)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest,"Bad Request")
+	}
+	user := models.GetUserById(id);
+	return c.JSON(http.StatusOK,user)
 }
 
 func DeleteUser(c echo.Context) error {

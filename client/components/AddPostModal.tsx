@@ -100,7 +100,10 @@ export default function AddPostModal() {
                      </Button>
                      <Button
                         form="postform"
-                        onClick={addPost}
+                        onClick={() => {
+                           addPost();
+                           closeHandler();
+                        }}
                         flat
                         auto
                         color={"success"}

@@ -3,18 +3,28 @@ import { API_URL } from "./url";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+export const getUserById = async (id: any) => {
+   try {
+      const response = await axios.get(`${API_URL}/user/${id}`);
+
+      return response;
+   } catch (error) {
+      console.log(error);
+   }
+};
+
 export const registerUser = async ({
    username,
    email,
    password,
    fullname,
-   profile,
 }: any) => {
    try {
       const notify = () =>
          toast.success("Registered successfully", {
             theme: "dark",
          });
+
       const response = await axios.post(
          `${API_URL}/register`,
          {
@@ -22,15 +32,16 @@ export const registerUser = async ({
             email,
             password,
             fullname,
-            profile,
          },
          { withCredentials: true }
       );
+
       if (response.status === 200) {
          localStorage.setItem("user", JSON.stringify(response.data));
          window.location.href = "/dashboard";
          notify();
       }
+
       return response.data;
    } catch (error: any) {
       console.log(error);
@@ -78,8 +89,8 @@ export const logout = async () => {
 
 export let user: any;
 
-if (typeof window !== "undefined") {
-   user = JSON.parse(localStorage.getItem("user") ?? "");
-} else {
-   console.log("You are on the server");
-}
+// if (typeof window !== "undefined") {
+//    user = JSON.parse(localStorage.getItem("user") ?? "");
+// } else {
+//    console.log("You are on the server");
+// }

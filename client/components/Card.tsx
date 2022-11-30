@@ -2,7 +2,7 @@ import { Card, Grid, Text, Container, Spacer, Button } from "@nextui-org/react";
 import React from "react";
 import ViewPost from "./ViewPost";
 import Image from "next/image";
-import { user } from "../pages/api/auth";
+import { getUserById, user } from "../pages/api/auth";
 
 export default function PostCard({ posts }: any) {
    let read = false;
@@ -62,10 +62,12 @@ export default function PostCard({ posts }: any) {
                                  </Card.Body>
                                  <Card.Footer>
                                     <Button
+                                       // onClick={getUserById(userid)}
                                        size="sm"
                                        color={"primary"}
                                        auto
                                        ghost
+                                       type="submit"
                                     >
                                        Like {1}
                                     </Button>
