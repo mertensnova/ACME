@@ -89,8 +89,12 @@ export const logout = async () => {
 
 export let user: any;
 
-// if (typeof window !== "undefined") {
-//    user = JSON.parse(localStorage.getItem("user") ?? "");
-// } else {
-//    console.log("You are on the server");
-// }
+if (typeof window !== "undefined") {
+   try {
+      user = JSON.parse(localStorage.getItem("user") ?? "");
+   } catch (error) {
+      console.log(error);
+   }
+} else {
+   console.log("You are on the server");
+}

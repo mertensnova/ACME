@@ -2,7 +2,7 @@ import { Card, Grid, Text, Container, Spacer, Button } from "@nextui-org/react";
 import React from "react";
 import ViewPost from "./ViewPost";
 import Image from "next/image";
-import { getUserById, user } from "../pages/api/auth";
+import Link from "next/link";
 
 export default function PostCard({ posts }: any) {
    let read = false;
@@ -42,6 +42,7 @@ export default function PostCard({ posts }: any) {
                                        width={34}
                                        height={34}
                                     />
+
                                     <Grid.Container css={{ pl: "$6" }}>
                                        <Grid xs={12}>
                                           <Text h4 css={{ lineHeight: "$xs" }}>
@@ -62,7 +63,6 @@ export default function PostCard({ posts }: any) {
                                  </Card.Body>
                                  <Card.Footer>
                                     <Button
-                                       // onClick={getUserById(userid)}
                                        size="sm"
                                        color={"primary"}
                                        auto
@@ -72,13 +72,15 @@ export default function PostCard({ posts }: any) {
                                        Like {1}
                                     </Button>
                                     <Spacer x={1} />
-                                    <Button
-                                       size="sm"
-                                       color={"success"}
-                                       auto
-                                       ghost
-                                    >
-                                       Comment
+
+                                    <Button size="sm" bordered>
+                                       <Link
+                                          href="/user/[id]"
+                                          as={`/user/${userid}`}
+                                          color={"white"}
+                                       >
+                                          View Profile
+                                       </Link>
                                     </Button>
                                  </Card.Footer>
                               </Card>

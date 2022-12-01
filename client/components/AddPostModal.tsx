@@ -55,7 +55,7 @@ export default function AddPostModal() {
                css={{
                   position: "fixed",
                   bottom: 100,
-                  right: 160,
+                  right: 50,
                   borderRadius: 9999,
                   width: "60px",
                   height: "60px",

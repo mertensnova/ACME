@@ -42,7 +42,7 @@ func GetAllUsers() []Users{
 
 func GetUserById(id uint64) []Users{
     var getUser []Users
-	db.Where("ID=?",id).Find(&getUser)
+	db.Preload("Posts").Where("ID=?",id).Find(&getUser)
 	return getUser
 }
 
