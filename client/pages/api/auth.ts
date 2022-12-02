@@ -2,6 +2,7 @@ import axios from "axios";
 import { API_URL } from "./url";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import { getFileName, upload } from "./save";
 
 export const getUserById = async (id: any) => {
    try {
@@ -18,13 +19,13 @@ export const registerUser = async ({
    email,
    password,
    fullname,
+   image,
 }: any) => {
    try {
       const notify = () =>
          toast.success("Registered successfully", {
             theme: "dark",
          });
-
       const response = await axios.post(
          `${API_URL}/register`,
          {
@@ -32,6 +33,7 @@ export const registerUser = async ({
             email,
             password,
             fullname,
+            image,
          },
          { withCredentials: true }
       );

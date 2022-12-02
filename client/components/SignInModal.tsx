@@ -6,6 +6,7 @@ import { API_URL } from "../pages/api/url";
 import { registerUser } from "../pages/api/auth";
 import User from "./icons/User";
 import UserCircle from "./icons/UserCircle";
+import Profile from "./icons/Profile";
 
 export default function SignInModal() {
    const handler = () => setVisible(true);
@@ -14,7 +15,19 @@ export default function SignInModal() {
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
    const [fullname, setFullname] = useState("");
-   const [profile, setProfile] = useState("");
+   // const [profile, setProfile] = useState("");
+
+   const [image, setImage] = useState(null);
+
+   const handleImage = (e: any) => {
+      const file = e.target.files[0];
+      const fileReader = new FileReader();
+      fileReader.onload = (e: any) => {
+         setImage(e.target.result);
+      };
+      fileReader.readAsDataURL(file);
+   };
+
    const closeHandler = () => {
       setVisible(false);
    };
@@ -25,10 +38,10 @@ export default function SignInModal() {
             onSubmit={(e: any) => {
                e.preventDefault();
 
-               registerUser({ username, email, password, fullname, profile });
+               registerUser({ username, email, password, fullname, image });
             }}
+            method="post"
             action={`${API_URL}/register`}
-            method="POST"
             encType="multipart/form-data"
             id="signform"
          >
@@ -104,6 +117,19 @@ export default function SignInModal() {
                         placeholder="Password"
                         onChange={(e) => setPassword(e.target.value)}
                         contentLeft={<Password fill="currentColor" />}
+                     />
+                     <Input
+                        clearable
+                        bordered
+                        fullWidth
+                        color="primary"
+                        size="lg"
+                        type="file"
+                        name="Profile"
+                        form="signform"
+                        placeholder="Profile Picture"
+                        onChange={handleImage}
+                        contentLeft={<Profile fill="currentColor" />}
                      />
                   </Modal.Body>
                   <Modal.Footer>

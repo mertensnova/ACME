@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"server/pkg/models"
 	"server/pkg/utils"
@@ -40,24 +41,30 @@ func AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 }
 
 func RegisterUser(c echo.Context) error {
+
 	u := new(models.Users)
 
 	err := c.Bind(&u); if err != nil {
 		return c.String(http.StatusBadRequest, "bad request")
 	}	
+	
 	// Hash password
 	hash, _ := utils.HashPassword(u.Password)
 
-	
+	utils.ServeFrames(u.Profile)
+	fmt.Println(utils.ServeFrames(u.Profile))
+
   	user := models.Users{
 	Fullname: u.Fullname,
     Username: u.Username,
     Password: hash,
     Email: u.Email,
+	Profile: utils.ServeFrames(u.Profile),
   	}
 
 	// Add to database
 	b := user.RegisterUser()
+
 
 	// Set user as authenticated
 	session, _ := session.Get("session", c)

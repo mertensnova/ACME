@@ -4,12 +4,14 @@ import (
 	"server/pkg/config"
 
 	"gorm.io/gorm"
+	pq "github.com/lib/pq"
 )
 
 type Posts struct{
 	gorm.Model
     Content string `form:"content" json:"content"`
     Likes int `json:"likes"`
+	LikedBy pq.Int64Array `gorm:"type:integer[]"`
 	UserID uint64 `json:"userid"`
 }
 
