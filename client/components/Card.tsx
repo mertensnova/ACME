@@ -1,8 +1,17 @@
-import { Card, Grid, Text, Container, Spacer, Button } from "@nextui-org/react";
+import {
+   Card,
+   Grid,
+   Text,
+   Container,
+   Spacer,
+   Button,
+   Avatar,
+} from "@nextui-org/react";
 import React from "react";
 import ViewPost from "./ViewPost";
 import Image from "next/image";
 import Link from "next/link";
+import { API_URL } from "../pages/api/url";
 
 export default function PostCard({ posts }: any) {
    let read = false;
@@ -19,12 +28,14 @@ export default function PostCard({ posts }: any) {
 
    return (
       <>
-         {posts?.map((value: any, index: any) => {
-            const { fullname, username } = value;
+         {posts?.map((value: any) => {
+            const { fullname, username, image } = value;
             return (
                <>
                   {value?.Posts.map((e: any) => {
                      const { ID, content, userid, like } = e;
+                     console.log(fullname, image);
+
                      return (
                         <>
                            <Spacer y={2} />
@@ -36,9 +47,12 @@ export default function PostCard({ posts }: any) {
                            >
                               <Card key={ID} css={{ p: "$6", mw: "400px" }}>
                                  <Card.Header>
-                                    <Image
+                                    <Avatar
+                                       size={"lg"}
+                                       color="gradient"
+                                       rounded
                                        alt="nextui logo"
-                                       src="/profile.jpg"
+                                       src={`${API_URL}/assests/${image}`}
                                        width={34}
                                        height={34}
                                     />

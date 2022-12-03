@@ -7,11 +7,9 @@ import (
 	"image/png"
 	"log"
 	"os"
-	"path"
 	"strings"
 
 	"github.com/google/uuid"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -44,15 +42,14 @@ func ServeFrames(data string) string{
     r := bytes.NewReader(unbased)
 
     switch ImageType {
-
       // If image is PNG
         case "png":
         im, err := png.Decode(r)
         if err != nil {
             log.Println("Bad PNG")
         }
-        path:= path.Join("/server/static/pictures/" + newName + ".png")
-        f, err := os.Create(path)
+       
+        f, err := os.OpenFile(newName + ".png",os.O_WRONLY|os.O_CREATE, 0777)
         
         if err != nil {
             log.Println("Cannot open file")
@@ -67,8 +64,8 @@ func ServeFrames(data string) string{
         if err != nil {
             log.Println("badJPEF")
         }
-        path := path.Join("/server/static/pictures/" + newName + ".jpeg")
-        f, err := os.Create(path)
+        
+        f, err := os.OpenFile(newName  + ".jpeg",os.O_WRONLY|os.O_CREATE, 0777)
 
         if err != nil {
             log.Println("BAD JEPEG")

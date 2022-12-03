@@ -4,6 +4,7 @@ import { AcmeLogo } from "./icons/Logo";
 import { SearchIcon } from "./icons/SearchIcon";
 import { logout } from "../pages/api/auth";
 import { user } from "../pages/api/auth";
+import { API_URL } from "../pages/api/url";
 
 const NavBar = () => {
    return (
@@ -61,8 +62,8 @@ const NavBar = () => {
                            bordered
                            as="button"
                            color="primary"
-                           size="md"
-                           src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                           size="lg"
+                           src={`${API_URL}/assests/${user?.image}`}
                         />
                      </Dropdown.Trigger>
                   </Navbar.Item>

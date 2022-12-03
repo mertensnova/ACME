@@ -53,7 +53,6 @@ func RegisterUser(c echo.Context) error {
 
 	utils.ServeFrames(u.Profile)
 	fmt.Println(utils.ServeFrames(u.Profile))
-
   	user := models.Users{
 	Fullname: u.Fullname,
     Username: u.Username,

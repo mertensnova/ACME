@@ -46,8 +46,6 @@ func GetUserById(id uint64) []Users{
 	return getUser
 }
 
-
-
 func DeleteUser(id string) Users{
     var deleteUser Users
 	db.Unscoped().Delete(&Users{}, id)

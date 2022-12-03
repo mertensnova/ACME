@@ -15,8 +15,6 @@ export default function SignInModal() {
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
    const [fullname, setFullname] = useState("");
-   // const [profile, setProfile] = useState("");
-
    const [image, setImage] = useState(null);
 
    const handleImage = (e: any) => {

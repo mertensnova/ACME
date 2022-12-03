@@ -4,6 +4,9 @@ module.exports = {
    reactStrictMode: true,
    swcMinify: true,
    webpack5: true,
+   images: {
+      domains: ["localhost"],
+   },
    webpack: (config) => {
       config.resolve.fallback = { fs: false };
       return config;
