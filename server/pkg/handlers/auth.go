@@ -50,14 +50,14 @@ func RegisterUser(c echo.Context) error {
 	// Hash password
 	hash, _ := utils.HashPassword(u.Password)
 
-	utils.ServeFrames(u.Profile)
+	// utils.ServeFrames(u.Profile)
 	
   	user := models.Users{
 	Fullname: u.Fullname,
     Username: u.Username,
     Password: hash,
     Email: u.Email,
-	Profile: utils.ServeFrames(u.Profile),
+	// Profile: utils.ServeFrames(u.Profile),
   	}
 
 	// Add to database
