@@ -50,7 +50,8 @@ export default function PostCard({ posts }: any) {
                                        color="gradient"
                                        rounded
                                        alt="nextui logo"
-                                       src={`${API_URL}/${image}`}
+                                       src={`/profile.jpg`}
+                                       // src={`${API_URL}/${image}`}
                                        width={34}
                                        height={34}
                                     />

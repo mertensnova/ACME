@@ -46,7 +46,8 @@ const UserCard = ({ user }: any) => {
                         <Row>
                            <Col span={3}>
                               <Card.Image
-                                 src={`${API_URL}/${image}`}
+                                 src={`/profile.jpg`}
+                                 // src={`${API_URL}/${image}`}
                                  css={{ bg: "black", br: "50%" }}
                                  height={40}
                                  width={40}
