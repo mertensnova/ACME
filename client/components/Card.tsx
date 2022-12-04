@@ -9,7 +9,6 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 import ViewPost from "./ViewPost";
-import Image from "next/image";
 import Link from "next/link";
 import { API_URL } from "../pages/api/url";
 
@@ -34,7 +33,6 @@ export default function PostCard({ posts }: any) {
                <>
                   {value?.Posts.map((e: any) => {
                      const { ID, content, userid, like } = e;
-                     console.log(fullname, image);
 
                      return (
                         <>
@@ -52,7 +50,7 @@ export default function PostCard({ posts }: any) {
                                        color="gradient"
                                        rounded
                                        alt="nextui logo"
-                                       src={`${API_URL}/assests/${image}`}
+                                       src={`${API_URL}/${image}`}
                                        width={34}
                                        height={34}
                                     />

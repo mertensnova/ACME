@@ -63,7 +63,7 @@ const NavBar = () => {
                            as="button"
                            color="primary"
                            size="lg"
-                           src={`${API_URL}/assests/${user?.image}`}
+                           src={`${API_URL}/${user?.image}`}
                         />
                      </Dropdown.Trigger>
                   </Navbar.Item>

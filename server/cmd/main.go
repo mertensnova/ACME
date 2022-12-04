@@ -23,7 +23,7 @@ func main() {
 	app.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
 	// app.Use(handlers.AuthMiddleware)
 
-	app.Static("/assests", "static")	
+	app.Static("/", "static")	
 	// app.Use(middleware.Static("/server/static"))
 	
    

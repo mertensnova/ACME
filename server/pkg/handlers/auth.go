@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"server/pkg/models"
 	"server/pkg/utils"
@@ -52,7 +51,7 @@ func RegisterUser(c echo.Context) error {
 	hash, _ := utils.HashPassword(u.Password)
 
 	utils.ServeFrames(u.Profile)
-	fmt.Println(utils.ServeFrames(u.Profile))
+	
   	user := models.Users{
 	Fullname: u.Fullname,
     Username: u.Username,

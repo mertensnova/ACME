@@ -7,9 +7,10 @@ import {
    Container,
    Spacer,
 } from "@nextui-org/react";
+import { API_URL } from "../pages/api/url";
 
 const UserCard = ({ user }: any) => {
-   const { fullname, username, profile, email } = user[0];
+   const { fullname, username, image, email } = user[0];
    return (
       <>
          <Spacer y={3} />
@@ -45,7 +46,7 @@ const UserCard = ({ user }: any) => {
                         <Row>
                            <Col span={3}>
                               <Card.Image
-                                 src="/pexels-eberhard-grossgasteiger-1292115.jpg"
+                                 src={`${API_URL}/${image}`}
                                  css={{ bg: "black", br: "50%" }}
                                  height={40}
                                  width={40}

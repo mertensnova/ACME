@@ -24,21 +24,22 @@ func CheckPasswordHash(password, hash string) bool {
 }
 
 func ServeFrames(data string) string{
-
-    newName := uuid.New().String()
     var image string;
+    var path string = "static/"
 
-  
     idx := strings.Index(data, ";base64,")
     if idx < 0 {
         log.Println("Invalid Image")
     }
+    
     ImageType := data[11:idx]
 
     unbased, err := base64.StdEncoding.DecodeString(data[idx+8:])
+
     if err != nil {
-        log.Println("base64")
+        log.Println(err)
     }
+
     r := bytes.NewReader(unbased)
 
     switch ImageType {
@@ -46,15 +47,16 @@ func ServeFrames(data string) string{
         case "png":
         im, err := png.Decode(r)
         if err != nil {
-            log.Println("Bad PNG")
+            log.Println(err)
         }
-       
-        f, err := os.OpenFile(newName + ".png",os.O_WRONLY|os.O_CREATE, 0777)
+
+        newName := path + uuid.New().String() + ".png"
+        f, err := os.Create(newName)
         
         if err != nil {
             log.Println("Cannot open file")
         }
-        image  = f.Name()
+        image  = strings.Split(f.Name(), "/")[1]
 
         png.Encode(f, im)
 
@@ -64,14 +66,17 @@ func ServeFrames(data string) string{
         if err != nil {
             log.Println("badJPEF")
         }
-        
-        f, err := os.OpenFile(newName  + ".jpeg",os.O_WRONLY|os.O_CREATE, 0777)
+
+        newName := path + uuid.New().String() + ".png"
+        f, err := os.Create(newName)
 
         if err != nil {
-            log.Println("BAD JEPEG")
+            log.Println(err)
         }
-        image  = f.Name()
+
+        image  = strings.Split(f.Name(), "/")[1]
         jpeg.Encode(f, im, nil)
+
     }
 
         return image
