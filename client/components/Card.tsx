@@ -11,9 +11,15 @@ import React from "react";
 import ViewPost from "./ViewPost";
 import Link from "next/link";
 import { API_URL } from "../pages/api/url";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
+import { user } from "../pages/api/auth";
 
 export default function PostCard({ posts }: any) {
    let read = false;
+   const router = useRouter();
 
    const truncateString = (str: any, num: any) => {
       if (str?.length > num) {
@@ -22,6 +28,24 @@ export default function PostCard({ posts }: any) {
          return subStr;
       } else {
          return str;
+      }
+   };
+
+   const likePost = async ({ userId, postId }: any) => {
+      const notify = () =>
+         toast.success("Post liked", {
+            theme: "dark",
+         });
+      try {
+         const response = await axios.patch(
+            `${API_URL}/like-post/${postId}`,
+            { userId },
+            { withCredentials: true }
+         );
+         notify();
+         router.replace(router.asPath);
+      } catch (error) {
+         console.log(error);
       }
    };
 
@@ -77,12 +101,13 @@ export default function PostCard({ posts }: any) {
                                  <Card.Footer>
                                     <Button
                                        size="sm"
+                                       onClick={() => likePost({ userid, ID })}
                                        color={"primary"}
                                        auto
                                        ghost
                                        type="submit"
                                     >
-                                       Like {1}
+                                       Like {like}
                                     </Button>
                                     <Spacer x={1} />
 

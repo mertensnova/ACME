@@ -1,10 +1,11 @@
 package models
 
 import (
+	"fmt"
 	"server/pkg/config"
 
-	"gorm.io/gorm"
 	pq "github.com/lib/pq"
+	"gorm.io/gorm"
 )
 
 type Posts struct{
@@ -31,7 +32,13 @@ func (post *Posts) AddPost() *Posts{
 }
 
 func GetAllPosts() []Users{
-	var Posts []Users
-	db.Preload("Posts").Find(&Posts)
-    return Posts 
+	var Users []Users
+	db.Preload("Posts").Find(&Users)
+    return Users
+}
+
+func LikePost(post_id uint64,user_id int){
+	var posts *Posts
+	db.Model(&posts).Where("ID = ?", post_id).Update("likes", gorm.Expr("likes + ?",1))
+	fmt.Println(user_id)
 }
