@@ -39,6 +39,9 @@ func GetAllPosts() []Users{
 
 func LikePost(post_id uint64,user_id int){
 	var posts *Posts
-	db.Model(&posts).Where("ID = ?", post_id).Update("likes", gorm.Expr("likes + ?",1))
+
+	db.Model(&posts).Where("ID = ?", post_id).UpdateColumns(Posts{Likes: posts.Likes + 1,LikedBy: append(posts.LikedBy,int64(user_id)) })
+
+	
 	fmt.Println(user_id)
 }

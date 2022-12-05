@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"server/pkg/models"
 	"strconv"
@@ -20,7 +21,7 @@ func AddPost(c echo.Context) error {
 	Likes: posts.Likes,
 	UserID: posts.UserID,
   	}
-
+	
 	// Add to database
 	b := post.AddPost()
 	
@@ -37,10 +38,13 @@ func LikePosts(c echo.Context) error {
 	type ID struct{
 		UserID int
 	}
+	
 	user := new(ID)
+	fmt.Println(user)
 	err := c.Bind(&user); if err != nil {
 		return c.String(http.StatusBadRequest, "bad request")
 	}
+	fmt.Println(user.UserID)
 
 	post_id,err := strconv.ParseUint(c.Param("id"), 10, 64)
 	// user_id,err := strconv.ParseUint(user.UserID, 10, 64)

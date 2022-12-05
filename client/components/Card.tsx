@@ -16,6 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import { user } from "../pages/api/auth";
+import Like from "./icons/Like";
 
 export default function PostCard({ posts }: any) {
    let read = false;
@@ -44,6 +45,9 @@ export default function PostCard({ posts }: any) {
          );
          notify();
          router.replace(router.asPath);
+         console.log(response);
+
+         return response.data;
       } catch (error) {
          console.log(error);
       }
@@ -56,7 +60,7 @@ export default function PostCard({ posts }: any) {
             return (
                <>
                   {value?.Posts.map((e: any) => {
-                     const { ID, content, userid, like } = e;
+                     const { ID, content, userid, likes } = e;
 
                      return (
                         <>
@@ -99,18 +103,22 @@ export default function PostCard({ posts }: any) {
                                     {read ? <ViewPost /> : ""}
                                  </Card.Body>
                                  <Card.Footer>
-                                    <Button
-                                       size="sm"
-                                       onClick={() => likePost({ userid, ID })}
+                                    {/* <Button
+                                       // size="sm"
+
                                        color={"primary"}
                                        auto
                                        ghost
                                        type="submit"
-                                    >
-                                       Like {like}
-                                    </Button>
+                                    > */}
+                                    <Like
+                                       color={"primary"}
+                                       onClick={() => likePost({ userid, ID })}
+                                       fill="primary"
+                                    />{" "}
+                                    {likes}
+                                    {/* </Button> */}
                                     <Spacer x={1} />
-
                                     <Button size="sm" bordered>
                                        <Link
                                           href="/user/[id]"

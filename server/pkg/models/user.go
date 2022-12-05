@@ -2,7 +2,6 @@ package models
 
 import (
 	"server/pkg/config"
-
 	"gorm.io/gorm"
 )
 
