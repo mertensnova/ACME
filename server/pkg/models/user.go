@@ -2,6 +2,7 @@ package models
 
 import (
 	"server/pkg/config"
+
 	"gorm.io/gorm"
 )
 
@@ -39,10 +40,12 @@ func GetAllUsers() []Users{
     return Users
 }
 
-func GetUserById(id uint64) []Users{
-    var getUser []Users
-	db.Preload("Posts").Where("ID=?",id).Find(&getUser)
-	return getUser
+func LikedPostsOfUser(id uint64) []Result{
+    // var getUser []Users
+	var result []Result
+	db.Raw("SELECT * from users JOIN likes ON users.id = likes.user_id").Scan(&result)
+	// db.Preload("Posts").Where("ID=?",id).Find(&getUser)
+	return result
 }
 
 func DeleteUser(id string) Users{

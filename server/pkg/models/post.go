@@ -13,6 +13,17 @@ type Posts struct{
 	UserID uint64 `json:"userid"`
 }
 
+type Result struct {
+	ID   int
+	Fullname string
+	Username string
+	Email  string
+	Profile string
+	Content string
+	Likes int
+	UserID int
+}
+
 func init()  {
 	config.Connect()
 	db = config.GetDB()
@@ -28,9 +39,8 @@ func (post *Posts) AddPost() *Posts{
 	return post 
 }
 
-func GetAllPosts() []Users{
-	var Users []Users
-	db.Preload("Posts").Find(&Users)
-	// db.Raw("SLE")
-    return Users
+func GetAllPosts() []Result{
+	var result []Result
+	db.Raw("SELECT * from posts JOIN users ON posts.user_id = users.id").Scan(&result)
+    return result
 }

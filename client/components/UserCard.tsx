@@ -11,6 +11,7 @@ import { API_URL } from "../pages/api/url";
 
 const UserCard = ({ user }: any) => {
    const { fullname, username, image, email } = user[0];
+
    return (
       <>
          <Spacer y={3} />

@@ -56,84 +56,76 @@ export default function PostCard({ posts }: any) {
    return (
       <>
          {posts?.map((value: any) => {
-            const { fullname, username, image } = value;
+            const { Fullname, Username, Profile, ID, Content, Likes,UserID } =
+               value;
             return (
                <>
-                  {value?.Posts?.map((e: any) => {
-                     const { ID, content, userid, likes } = e;
+                  <Spacer y={2} />
+                  <Container
+                     display="flex"
+                     alignItems="center"
+                     justify="center"
+                     xl={true}
+                  >
+                     <Card key={ID} css={{ p: "$6", mw: "400px" }}>
+                        <Card.Header>
+                           <Avatar
+                              size={"lg"}
+                              color="gradient"
+                              rounded
+                              alt="nextui logo"
+                              src={`/profile.jpg`}
+                              // src={`${API_URL}/${image}`}
+                              width={34}
+                              height={34}
+                           />
 
-                     return (
-                        <>
-                           <Spacer y={2} />
-                           <Container
-                              display="flex"
-                              alignItems="center"
-                              justify="center"
-                              xl={true}
-                           >
-                              <Card key={ID} css={{ p: "$6", mw: "400px" }}>
-                                 <Card.Header>
-                                    <Avatar
-                                       size={"lg"}
-                                       color="gradient"
-                                       rounded
-                                       alt="nextui logo"
-                                       src={`/profile.jpg`}
-                                       // src={`${API_URL}/${image}`}
-                                       width={34}
-                                       height={34}
-                                    />
+                           <Grid.Container css={{ pl: "$6" }}>
+                              <Grid xs={12}>
+                                 <Text h4 css={{ lineHeight: "$xs" }}>
+                                    {Fullname}
+                                 </Text>
+                              </Grid>
+                              <Grid xs={12}>
+                                 <Text css={{ color: "$accents8" }}>
+                                    @{Username}
+                                 </Text>
+                              </Grid>
+                           </Grid.Container>
+                        </Card.Header>
 
-                                    <Grid.Container css={{ pl: "$6" }}>
-                                       <Grid xs={12}>
-                                          <Text h4 css={{ lineHeight: "$xs" }}>
-                                             {fullname}
-                                          </Text>
-                                       </Grid>
-                                       <Grid xs={12}>
-                                          <Text css={{ color: "$accents8" }}>
-                                             @{username}
-                                          </Text>
-                                       </Grid>
-                                    </Grid.Container>
-                                 </Card.Header>
-
-                                 <Card.Body css={{ py: "$2" }}>
-                                    <Text>{truncateString(content, 220)}</Text>
-                                    {read ? <ViewPost /> : ""}
-                                 </Card.Body>
-                                 <Card.Footer>
-                                    {/* <Button
-                                       // size="sm"
-
-                                       color={"primary"}
-                                       auto
-                                       ghost
-                                       type="submit"
-                                    > */}
-                                    <Like
-                                       color={"primary"}
-                                       onClick={() => likePost({ userid, ID })}
-                                       fill="primary"
-                                    />{" "}
-                                    {likes}
-                                    {/* </Button> */}
-                                    <Spacer x={1} />
-                                    <Button size="sm" bordered>
-                                       <Link
-                                          href="/user/[id]"
-                                          as={`/user/${userid}`}
-                                          color={"white"}
-                                       >
-                                          View Profile
-                                       </Link>
-                                    </Button>
-                                 </Card.Footer>
-                              </Card>
-                           </Container>
-                        </>
-                     );
-                  })}
+                        <Card.Body css={{ py: "$2" }}>
+                           <Text>{truncateString(Content, 220)}</Text>
+                           {read ? <ViewPost /> : ""}
+                        </Card.Body>
+                        <Card.Footer>
+                           {/* <Button
+                              size="sm"
+                              color={"primary"}
+                              auto
+                              ghost
+                              type="submit"
+                           > */}
+                              <Like
+                                 color={"primary"}
+                                 onClick={() => likePost({ UserID, ID })}
+                                 fill="primary"
+                              />{" "}
+                              {Likes}
+                           {/* </Button> */}
+                           <Spacer x={1} />
+                           <Button size="sm" bordered>
+                              <Link
+                                 href="/user/[id]"
+                                 as={`/user/${UserID}`}
+                                 color={"white"}
+                              >
+                                 View Profile
+                              </Link>
+                           </Button>
+                        </Card.Footer>
+                     </Card>
+                  </Container>
                </>
             );
          })}

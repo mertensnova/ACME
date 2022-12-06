@@ -33,7 +33,7 @@ func main() {
 	app.GET("/logout", handlers.Logout)
 	app.GET("/users",handlers.GetAllUsers)
 	app.GET("/user/:id",handlers.GetUserById)
-	app.DELETE("/user/:id",handlers.DeleteUser)
+	// app.DELETE("/user/:id",handlers.DeleteUser)
 
 	// Post Routes
 	app.POST("/add-post",handlers.AddPost)

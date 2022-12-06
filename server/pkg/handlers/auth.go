@@ -144,7 +144,7 @@ func GetUserById(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusBadRequest,"Bad Request")
 	}
-	user := models.GetUserById(id);
+	user := models.LikedPostsOfUser(id);
 	return c.JSON(http.StatusOK,user)
 }
 
