@@ -59,7 +59,7 @@ export default function PostCard({ posts }: any) {
             const { fullname, username, image } = value;
             return (
                <>
-                  {value?.Posts.map((e: any) => {
+                  {value?.Posts?.map((e: any) => {
                      const { ID, content, userid, likes } = e;
 
                      return (

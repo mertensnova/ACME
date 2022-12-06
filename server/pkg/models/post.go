@@ -1,10 +1,8 @@
 package models
 
 import (
-	"fmt"
 	"server/pkg/config"
 
-	pq "github.com/lib/pq"
 	"gorm.io/gorm"
 )
 
@@ -12,7 +10,6 @@ type Posts struct{
 	gorm.Model
     Content string `form:"content" json:"content"`
     Likes int `json:"likes"`
-	LikedBy pq.Int64Array `gorm:"type:integer[]"`
 	UserID uint64 `json:"userid"`
 }
 
@@ -34,14 +31,6 @@ func (post *Posts) AddPost() *Posts{
 func GetAllPosts() []Users{
 	var Users []Users
 	db.Preload("Posts").Find(&Users)
+	// db.Raw("SLE")
     return Users
-}
-
-func LikePost(post_id uint64,user_id int){
-	var posts *Posts
-
-	db.Model(&posts).Where("ID = ?", post_id).UpdateColumns(Posts{Likes: posts.Likes + 1,LikedBy: append(posts.LikedBy,int64(user_id)) })
-
-	
-	fmt.Println(user_id)
 }

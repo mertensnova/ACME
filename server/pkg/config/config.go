@@ -13,7 +13,10 @@ var (
 func Connect()  {
 
 	dsn := "user=postgres password=bSHNLx5YqiMaOzuo host=db.wegkjexhqkunpdcjncex.supabase.co port=5432 dbname=postgres"
-	d, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	d, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+		SkipDefaultTransaction: true,
+		PrepareStmt: true,
+	})
 
 	if err != nil {
 		panic(err)
