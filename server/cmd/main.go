@@ -31,9 +31,11 @@ func main() {
 	app.POST("/register",handlers.RegisterUser)
 	app.POST("/login", handlers.LoginUser)
 	app.GET("/logout", handlers.Logout)
+
+	// User Routes
 	app.GET("/users",handlers.GetAllUsers)
-	app.GET("/user/:id",handlers.GetUserById)
-	// app.DELETE("/user/:id",handlers.DeleteUser)
+	app.GET("/user/:id",handlers.GetPostsOfUser)
+	app.DELETE("/delete-user/:id",handlers.DeleteUser)
 
 	// Post Routes
 	app.POST("/add-post",handlers.AddPost)

@@ -8,8 +8,8 @@ import (
 
 type Likes struct{
 	gorm.Model
-    UserID int `json:"user_id"`
-    PostID int `json:"post_id"`
+    UserID int `json:"userid"`
+    PostID int `json:"postid"`
 	
 }
 

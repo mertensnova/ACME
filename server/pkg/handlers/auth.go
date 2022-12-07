@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"server/pkg/models"
 	"server/pkg/utils"
-	"strconv"
 	"strings"
 
 	"github.com/gorilla/sessions"
@@ -132,24 +131,4 @@ func Logout(c echo.Context) error {
     session.Save(c.Request(),c.Response())
 	return c.JSON(http.StatusOK, "Logout")
 
-}
-
-func GetAllUsers(c echo.Context) error {
-	allUsers := models.GetAllUsers()
-	return c.JSON(http.StatusOK,allUsers)
-}
-
-func GetUserById(c echo.Context) error {
-	id,err := strconv.ParseUint(c.Param("id"), 10, 64)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest,"Bad Request")
-	}
-	user := models.LikedPostsOfUser(id);
-	return c.JSON(http.StatusOK,user)
-}
-
-func DeleteUser(c echo.Context) error {
-	id := c.Param("id")
-    deletedUser:= models.DeleteUser(id)
-    return c.JSON(http.StatusOK,deletedUser)
 }

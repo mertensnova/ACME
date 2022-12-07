@@ -16,6 +16,7 @@ type Users struct{
     Email    string  `gorm:"unique" form:"Email" json:"email"`
 	Profile string 	`form:"Image" json:"image"`
 	Posts []Posts  	`gorm:"foreignKey:UserID;references:ID"`
+	LikedPosts []Likes `gorm:"foreignKey:PostID;references:ID"`
 }
 
 func init()  {
@@ -40,11 +41,15 @@ func GetAllUsers() []Users{
     return Users
 }
 
-func LikedPostsOfUser(id uint64) []Result{
-    // var getUser []Users
+func GetPostsOfUser(id uint64) []Result{
 	var result []Result
-	db.Raw("SELECT * from users JOIN likes ON users.id = likes.user_id").Scan(&result)
-	// db.Preload("Posts").Where("ID=?",id).Find(&getUser)
+	db.Raw("SELECT * from posts JOIN users ON posts.user_id = users.id WHERE users.id = ?",id).Scan(&result)
+	return result
+}
+
+func GetLikedPostsOfUser(id uint64) []Result{
+	var result []Result
+	db.Raw("SELECT * from posts JOIN likes ON posts.id = likes.post_id JOIN users ON posts.user_id = users.id WHERE likes.user_id = ?",id).Scan(&result)
 	return result
 }
 
