@@ -17,6 +17,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import { user } from "../pages/api/auth";
 import Like from "./icons/Like";
+import { HeartIcon } from "./icons/Heart";
+import CardDropdownMedu from "./CardDropdownMenu.";
+import CardDropdownMenu from "./CardDropdownMenu.";
 
 export default function PostCard({ posts }: any) {
    let read = false;
@@ -56,11 +59,19 @@ export default function PostCard({ posts }: any) {
    return (
       <>
          {posts?.map((value: any) => {
-            const { Fullname, Username, Profile, ID, Content, Likes,UserID } =
+            const { Fullname, Username, Profile, ID, Content, Likes, UserID } =
                value;
             return (
                <>
                   <Spacer y={2} />
+
+                  {/* <Button
+                     icon={<UserIcon fill="currentColor" />}
+                     color="error"
+                     flat
+                  >
+                     Delete User
+                  </Button> */}
                   <Container
                      display="flex"
                      alignItems="center"
@@ -99,30 +110,17 @@ export default function PostCard({ posts }: any) {
                            {read ? <ViewPost /> : ""}
                         </Card.Body>
                         <Card.Footer>
-                           {/* <Button
-                              size="sm"
-                              color={"primary"}
+                           <Button
                               auto
-                              ghost
-                              type="submit"
-                           > */}
-                              <Like
-                                 color={"primary"}
-                                 onClick={() => likePost({ UserID, ID })}
-                                 fill="primary"
-                              />{" "}
+                              color="error"
+                              onClick={() => likePost({ UserID, ID })}
+                              icon={<HeartIcon fill="currentColor" filled />}
+                           >
                               {Likes}
-                           {/* </Button> */}
-                           <Spacer x={1} />
-                           <Button size="sm" bordered>
-                              <Link
-                                 href="/user/[id]"
-                                 as={`/user/${UserID}`}
-                                 color={"white"}
-                              >
-                                 View Profile
-                              </Link>
                            </Button>
+
+                           <Spacer x={1} />
+                           <CardDropdownMenu userID={UserID} />
                         </Card.Footer>
                      </Card>
                   </Container>

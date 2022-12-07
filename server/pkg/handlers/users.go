@@ -21,20 +21,18 @@ func GetPostsOfUser(c echo.Context) error {
 	}
 	type New struct{
 		posts []models.Result
-		liked []models.Result
+		liked []models.Result 
 	}
 	
-
-	// user_posts := models.GetPostsOfUser(id);
-	// user_liked_posts := models.GetLikedPostsOfUser(id);
+	user_posts,user_liked_posts := models.GetPostsOfUser(id);
 
 	data := New{
-		posts : models.GetPostsOfUser(id),
-		liked:  models.GetLikedPostsOfUser(id),
+		posts : user_posts,
+		liked:  user_liked_posts,
 	}
+
 	fmt.Println(data)
-	
-	return c.JSONPretty(http.StatusOK,data," ")
+	return c.JSON(http.StatusOK,data)
 }
 
 

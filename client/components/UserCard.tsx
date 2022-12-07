@@ -2,7 +2,6 @@ import React from "react";
 import { Card, Button, Text, Spacer, Avatar } from "@nextui-org/react";
 
 const UserCard = ({ data }: any) => {
-
    return (
       <Card
          css={{
@@ -22,9 +21,6 @@ const UserCard = ({ data }: any) => {
                @username
             </Text>
             <Spacer y={1} />
-            <Button auto flat>
-               Edit Profile
-            </Button>
          </Card.Body>
       </Card>
    );

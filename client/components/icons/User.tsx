@@ -1,15 +1,38 @@
-const User = ({ fill, size, height, width, ...props }: any) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-    //   style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"
-    >
-      <path d="M12 2a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"></path>
-    </svg>
-  );
+export const UserIcon = ({
+   fill = "currentColor",
+   filled,
+   size,
+   height,
+   width,
+   label,
+   ...props
+}: any) => {
+   return (
+      <svg
+         data-name="Iconly/Curved/Profile"
+         xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 24 24"
+         width={size || width || 24}
+         height={size || height || 24}
+         {...props}
+      >
+         <g
+            fill="none"
+            stroke={fill}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeMiterlimit={10}
+            strokeWidth={1.5}
+         >
+            <path
+               data-name="Stroke 1"
+               d="M11.845 21.662C8.153 21.662 5 21.088 5 18.787s3.133-4.425 6.845-4.425c3.692 0 6.845 2.1 6.845 4.4s-3.134 2.9-6.845 2.9z"
+            />
+            <path
+               data-name="Stroke 3"
+               d="M11.837 11.174a4.372 4.372 0 10-.031 0z"
+            />
+         </g>
+      </svg>
+   );
 };
-
-export default User;

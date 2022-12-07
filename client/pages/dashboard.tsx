@@ -4,13 +4,18 @@ import AddPostModal from "../components/AddPostModal";
 import PostCard from "../components/Card";
 import { API_URL } from "./api/url";
 import NavBar from "../components/NavBar";
+import News from "../components/News";
+import { Container } from "@nextui-org/react";
 
 export default function Dashboard({ posts }: any) {
    return (
       <>
          <NavBar />
-         <PostCard posts={posts} />
+
          <AddPostModal />
+         {/* <News /> */}
+
+         <PostCard posts={posts} />
       </>
    );
 }
