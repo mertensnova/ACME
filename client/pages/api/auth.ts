@@ -41,6 +41,8 @@ export const registerUser = async ({
       if (response.status === 200) {
          localStorage.setItem("user", JSON.stringify(response.data));
          window.location.href = "/dashboard";
+         console.log(response);
+
          notify();
       }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button, Text, Spacer, Avatar } from "@nextui-org/react";
+import { Card, Text, Spacer, Avatar } from "@nextui-org/react";
 
 const UserCard = ({ data }: any) => {
    return (
@@ -15,9 +15,9 @@ const UserCard = ({ data }: any) => {
          <Card.Body css={{ p: 0 }}>
             <Avatar src="/profile.jpg" css={{ size: "$20" }} />
             <Spacer y={1} />
-            <Text size={"$3xl"}>Amr Ashebo</Text>
+            <Text size={"$3xl"}>{data?.posts[0]?.Fullname}</Text>
             <Text color="#d1d1d1" size={"xl"}>
-               @username
+               @{data?.posts[0]?.Username}
             </Text>
             <Spacer y={1} />
          </Card.Body>

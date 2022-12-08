@@ -21,8 +21,7 @@ import CardDropdownMenu from "./CardDropdownMenu.";
 export default function PostCard({ posts }: any) {
    let read = false;
    const router = useRouter();
-
-   const id = user?.ID;
+   const userId = user?.ID;
 
    const truncateString = (str: any, num: any) => {
       if (str?.length > num) {
@@ -46,7 +45,7 @@ export default function PostCard({ posts }: any) {
 
          const response = await axios.post(
             `${API_URL}/like-post`,
-            { id, postId },
+            { userId, postId },
             { withCredentials: true }
          );
          notify();

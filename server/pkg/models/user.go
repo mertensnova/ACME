@@ -44,7 +44,7 @@ func GetAllUsers() []Users{
 func GetPostsOfUser(id uint64) ([]Result,[]Result){
 	var posts []Result
 	var liked_posts []Result
-	db.Raw("SELECT * from posts JOIN users ON posts.user_id = users.id WHERE users.id = ?",id).Scan(&posts)
+	db.Raw("SELECT posts.id,fullname,username,content,email,profile,likes,user_id from posts JOIN users ON posts.user_id = users.id WHERE users.id = ?",id).Scan(&posts)
 	db.Raw("SELECT * from posts JOIN likes ON posts.id = likes.post_id JOIN users ON posts.user_id = users.id WHERE likes.user_id = ?",id).Scan(&liked_posts)
 	return posts ,liked_posts
 }

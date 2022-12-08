@@ -10,6 +10,7 @@ import ViewUser from "../../../components/ViewUser";
 
 const User = ({ user }: any) => {
    const [kind, setKind] = useState("posts");
+
    return (
       <>
          <NavBar />
