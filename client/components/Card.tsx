@@ -22,6 +22,8 @@ export default function PostCard({ posts }: any) {
    let read = false;
    const router = useRouter();
 
+   const id = user?.ID;
+
    const truncateString = (str: any, num: any) => {
       if (str?.length > num) {
          let subStr = str.substring(0, num);
@@ -32,17 +34,19 @@ export default function PostCard({ posts }: any) {
       }
    };
 
-   const likePost = async ({ userId, postId }: any) => {
+   const likePost = async ({ e }: any) => {
       const notify = () =>
          toast.success("Post liked", {
             theme: "dark",
          });
       try {
-         // console.log(postId, userId);
+         const postId = parseInt(
+            e.target.parentElement.parentElement.getAttribute("data-key")
+         );
 
          const response = await axios.post(
             `${API_URL}/like-post`,
-            { userId, postId },
+            { id, postId },
             { withCredentials: true }
          );
          notify();
@@ -57,9 +61,7 @@ export default function PostCard({ posts }: any) {
    return (
       <>
          {posts?.map((value: any) => {
-            const { Fullname, Username, Profile, ID, Content, Likes, UserID } =
-               value;
-            // console.log(UserID,ID);
+            const { Fullname, Username, ID, Content, Likes, UserID } = value;
 
             return (
                <>
@@ -117,7 +119,7 @@ export default function PostCard({ posts }: any) {
                            <Button
                               auto
                               color="error"
-                              onClick={() => likePost({ UserID, ID })}
+                              onClick={(e: any) => likePost({ e })}
                               icon={<HeartIcon fill="currentColor" filled />}
                            >
                               {Likes}

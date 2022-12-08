@@ -14,7 +14,7 @@ type Posts struct{
 }
 
 type Result struct {
-	ID   int
+	ID  int
 	Fullname string
 	Username string
 	Email  string
@@ -41,6 +41,6 @@ func (post *Posts) AddPost() *Posts{
 
 func GetAllPosts() []Result{
 	var result []Result
-	db.Raw("SELECT * from posts JOIN users ON posts.user_id = users.id").Scan(&result)
+	db.Raw("SELECT posts.id,fullname,username,content,email,profile,likes,user_id from posts JOIN users ON posts.user_id = users.id").Scan(&result)
     return result
 }
