@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"server/pkg/models"
 
@@ -19,8 +20,9 @@ func LikePost(c echo.Context) error {
 	UserID: liked_by.UserID,
   	}
 
+	fmt.Println(like.PostID)
+
 	// Add to database
-	b := like.LikePost()
-	
+	b := like.LikePost()	
 	return c.JSON(http.StatusOK, b)
 }

@@ -11,10 +11,7 @@ export default function Dashboard({ posts }: any) {
    return (
       <>
          <NavBar />
-
          <AddPostModal />
-         {/* <News /> */}
-
          <PostCard posts={posts} />
       </>
    );

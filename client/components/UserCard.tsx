@@ -9,7 +9,6 @@ const UserCard = ({ data }: any) => {
             h: "350px",
             display: "flex",
             alignItems: "center",
-            // justifyContent: "center",
          }}
       >
          <Spacer y={2} />

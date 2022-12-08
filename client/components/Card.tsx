@@ -9,16 +9,13 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 import ViewPost from "./ViewPost";
-import Link from "next/link";
 import { API_URL } from "../pages/api/url";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
-import { user } from "../pages/api/auth";
-import Like from "./icons/Like";
 import { HeartIcon } from "./icons/Heart";
-import CardDropdownMedu from "./CardDropdownMenu.";
+import { user } from "../pages/api/auth";
 import CardDropdownMenu from "./CardDropdownMenu.";
 
 export default function PostCard({ posts }: any) {
@@ -41,14 +38,15 @@ export default function PostCard({ posts }: any) {
             theme: "dark",
          });
       try {
-         const response = await axios.patch(
-            `${API_URL}/like-post/${postId}`,
-            { userId },
+         // console.log(postId, userId);
+
+         const response = await axios.post(
+            `${API_URL}/like-post`,
+            { userId, postId },
             { withCredentials: true }
          );
          notify();
          router.replace(router.asPath);
-         console.log(response);
 
          return response.data;
       } catch (error) {
@@ -61,6 +59,8 @@ export default function PostCard({ posts }: any) {
          {posts?.map((value: any) => {
             const { Fullname, Username, Profile, ID, Content, Likes, UserID } =
                value;
+            // console.log(UserID,ID);
+
             return (
                <>
                   <Spacer y={2} />
@@ -78,7 +78,11 @@ export default function PostCard({ posts }: any) {
                      justify="center"
                      xl={true}
                   >
-                     <Card key={ID} css={{ p: "$6", mw: "400px" }}>
+                     <Card
+                        data-key={ID}
+                        key={ID}
+                        css={{ p: "$6", mw: "400px" }}
+                     >
                         <Card.Header>
                            <Avatar
                               size={"lg"}

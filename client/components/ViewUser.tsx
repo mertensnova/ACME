@@ -1,4 +1,5 @@
 import { Button, Container, Grid, Spacer } from "@nextui-org/react";
+import { useState } from "react";
 import { API_URL } from "../pages/api/url";
 import UserCard from "./UserCard";
 
@@ -14,14 +15,6 @@ const ViewUser = ({ user }: any) => {
             }}
          >
             <UserCard data={user} />
-            <Grid.Container gap={2} justify="center">
-               <Grid>
-                  <Button flat>Posts</Button>
-               </Grid>
-               <Grid>
-                  <Button flat>Liked Posts</Button>
-               </Grid>
-            </Grid.Container>
          </Container>
       </>
    );

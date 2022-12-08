@@ -4,7 +4,7 @@ import { Mail } from "./icons/Mail";
 import { Password } from "./icons/Password";
 import { API_URL } from "../pages/api/url";
 import { registerUser } from "../pages/api/auth";
-import User from "./icons/User";
+import { UserIcon } from "./icons/User";
 import UserCircle from "./icons/UserCircle";
 import Profile from "./icons/Profile";
 
@@ -88,7 +88,7 @@ export default function SignInModal() {
                         value={username}
                         placeholder="Username"
                         onChange={(e) => setUsername(e.target.value)}
-                        contentLeft={<User fill="currentColor" />}
+                        contentLeft={<UserIcon fill="currentColor" />}
                      />
                      <Input
                         clearable
