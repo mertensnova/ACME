@@ -31,3 +31,20 @@ func GetAllPosts(c echo.Context) error {
 	allPosts := models.GetAllPosts()
 	return c.JSON(http.StatusOK,allPosts)
 }
+
+func EditPost(c echo.Context) error {
+	post := new(models.Posts)
+	err := c.Bind(&post); if err != nil {
+		return c.String(http.StatusBadRequest, "bad request")
+	}
+
+	p := models.Posts{
+		ID: post.ID,
+		Content: post.Content,
+	}
+
+	new_data:= p.EditPost()
+
+	return c.JSON(http.StatusOK,new_data)
+
+}

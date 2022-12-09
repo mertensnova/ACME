@@ -26,6 +26,24 @@ func GetPostsOfUser(c echo.Context) error {
 	})
 }
 
+func UpdateUser(c echo.Context) error {
+	user := new(models.Users)
+	err := c.Bind(&user); if err != nil {
+		return c.String(http.StatusBadRequest, "bad request")
+	}
+	
+	u := models.Users{
+		ID: user.ID,
+		Fullname: user.Fullname,
+		Username: user.Username,
+	}
+
+	new_data:= u.UpdateUser()
+
+	return c.JSON(http.StatusOK,new_data)
+
+}
+
 func DeleteUser(c echo.Context) error {
 	id := c.Param("id")
     deletedUser:= models.DeleteUser(id)

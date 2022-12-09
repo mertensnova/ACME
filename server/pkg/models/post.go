@@ -8,6 +8,7 @@ import (
 
 type Posts struct{
 	gorm.Model
+	ID int           `gorm:"primaryKey;autoIncrement"`
     Content string `form:"content" json:"content"`
     Likes int `json:"likes"`
 	UserID uint64 `json:"userid"`
@@ -43,4 +44,9 @@ func GetAllPosts() []Result{
 	var result []Result
 	db.Raw("SELECT posts.id,fullname,username,content,email,profile,likes,user_id from posts JOIN users ON posts.user_id = users.id").Scan(&result)
     return result
+}
+
+func (post *Posts) EditPost() *Posts{
+	db.Model(&post).Where("ID = ?",post.ID).Updates(Posts{Content: post.Content})
+	return post
 }

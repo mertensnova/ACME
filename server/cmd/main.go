@@ -30,11 +30,13 @@ func main() {
 	// Auth Routes
 	app.POST("/register",handlers.RegisterUser)
 	app.POST("/login", handlers.LoginUser)
+	// app.PATCH("/passwd-recent")
 	app.GET("/logout", handlers.Logout)
 
 	// User Routes
 	app.GET("/users",handlers.GetAllUsers)
 	app.GET("/user/:id",handlers.GetPostsOfUser)
+	app.PATCH("/@me",handlers.UpdateUser)
 	app.DELETE("/delete-user/:id",handlers.DeleteUser)
 
 	// Post Routes
@@ -42,6 +44,7 @@ func main() {
 	app.GET("/dashboard", handlers.GetAllPosts)
 	app.POST("/like-post", handlers.LikePost)
 	// app.DELETE("/post/:id", handlers.DeletePost)
+	app.PATCH("/@my-post", handlers.EditPost)
 
 	app.Logger.Fatal(app.Start(":8080"))
 	

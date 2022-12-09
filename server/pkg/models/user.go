@@ -10,6 +10,7 @@ var db *gorm.DB
 
 type Users struct{
 	gorm.Model
+	ID int           `gorm:"primaryKey;autoIncrement"`
 	Fullname string `form:"Fullname" json:"fullname"`
     Username string `gorm:"unique" form:"Username" json:"username"`
     Password string `form:"Password" json:"password"`
@@ -47,6 +48,11 @@ func GetPostsOfUser(id uint64) ([]Result,[]Result){
 	db.Raw("SELECT posts.id,fullname,username,content,email,profile,likes,user_id from posts JOIN users ON posts.user_id = users.id WHERE users.id = ?",id).Scan(&posts)
 	db.Raw("SELECT * from posts JOIN likes ON posts.id = likes.post_id JOIN users ON posts.user_id = users.id WHERE likes.user_id = ?",id).Scan(&liked_posts)
 	return posts ,liked_posts
+}
+
+func (user *Users) UpdateUser() *Users {
+	db.Model(&user).Where("ID = ?",user.ID).Updates(Users{Fullname: user.Fullname, Username:user.Username})
+	return user
 }
 
 func DeleteUser(id string) Users{
