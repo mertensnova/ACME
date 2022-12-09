@@ -2,11 +2,45 @@ import axios from "axios";
 import { API_URL } from "./url";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { getFileName, upload } from "./save";
+
+export let user: any;
+
+if (typeof window !== "undefined") {
+   try {
+      user = JSON.parse(localStorage.getItem("user") ?? "");
+   } catch (error) {
+      console.log(error);
+   }
+} else {
+   console.log("You are on the server");
+}
 
 export const getUserById = async (id: any) => {
    try {
       const response = await axios.get(`${API_URL}/user/${id}`);
+      return response;
+   } catch (error) {
+      console.log(error);
+   }
+};
+
+export const updateUser = async ({ username, fullname, id }: any) => {
+   try {
+      const notify = () =>
+         toast.success("Updated successfully", {
+            theme: "dark",
+         });
+
+      const response = await axios.patch(`${API_URL}/@me`, {
+         id,
+         username,
+         fullname,
+      });
+      if (response.status === 200) {
+         localStorage.setItem("user", JSON.stringify(response.data));
+         window.location.href = "/dashboard";
+         notify();
+      }
 
       return response;
    } catch (error) {
@@ -41,8 +75,6 @@ export const registerUser = async ({
       if (response.status === 200) {
          localStorage.setItem("user", JSON.stringify(response.data));
          window.location.href = "/dashboard";
-         console.log(response);
-
          notify();
       }
 
@@ -90,15 +122,3 @@ export const logout = async () => {
       console.log(error);
    }
 };
-
-export let user: any;
-
-if (typeof window !== "undefined") {
-   try {
-      user = JSON.parse(localStorage.getItem("user") ?? "");
-   } catch (error) {
-      console.log(error);
-   }
-} else {
-   console.log("You are on the server");
-}

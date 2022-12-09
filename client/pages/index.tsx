@@ -3,7 +3,6 @@ import { Navbar, Text, Container, Spacer } from "@nextui-org/react";
 import { AcmeLogo } from "../components/icons/Logo";
 import SignInModal from "../components/SignInModal";
 import LoginModal from "../components/LoginModal";
-import Image from "next/image";
 
 export default function Home() {
    return (

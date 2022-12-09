@@ -5,8 +5,10 @@ import { SearchIcon } from "./icons/SearchIcon";
 import { logout } from "../pages/api/auth";
 import { user } from "../pages/api/auth";
 import { API_URL } from "../pages/api/url";
+import { useRouter } from "next/router";
 
 const NavBar = () => {
+   const router = useRouter();
    return (
       <>
          <Navbar isBordered variant="sticky">
@@ -74,6 +76,8 @@ const NavBar = () => {
                         if (actionKey === "logout") {
                            logout();
                            localStorage.removeItem("user");
+                        } else if (actionKey === "edit") {
+                           router.push("/@me");
                         }
                      }}
                   >
@@ -83,12 +87,12 @@ const NavBar = () => {
                         </Text>
                         <Text b color="inherit" css={{ d: "flex" }}>
                            {user?.email}
-                           {/* Hello */}
                         </Text>
                      </Dropdown.Item>
                      <Dropdown.Item key="settings" withDivider>
                         Change Theme
                      </Dropdown.Item>
+
                      <Dropdown.Item key="edit">Edit Profile</Dropdown.Item>
                      <Dropdown.Item key="logout" color="error">
                         Logout

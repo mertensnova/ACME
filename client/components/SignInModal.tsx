@@ -48,7 +48,7 @@ export default function SignInModal() {
                   Sign Up
                </Button>
                <Modal
-                  blur
+                  preventClose
                   closeButton
                   aria-labelledby="modal-title"
                   open={visible}

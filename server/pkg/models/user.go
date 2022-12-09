@@ -51,8 +51,10 @@ func GetPostsOfUser(id uint64) ([]Result,[]Result){
 }
 
 func (user *Users) UpdateUser() *Users {
+	var new_info *Users
 	db.Model(&user).Where("ID = ?",user.ID).Updates(Users{Fullname: user.Fullname, Username:user.Username})
-	return user
+	db.First(&new_info,user.ID)
+	return new_info
 }
 
 func DeleteUser(id string) Users{
