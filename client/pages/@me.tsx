@@ -96,8 +96,6 @@ const Profile = () => {
                         onClick={() => router.push("/dashboard")}
                         color={"error"}
                         flat
-                        type="submit"
-                        form="editform"
                      >
                         Back
                      </Button>
