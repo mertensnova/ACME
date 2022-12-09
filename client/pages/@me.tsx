@@ -8,13 +8,12 @@ import {
    Row,
    Avatar,
 } from "@nextui-org/react";
-import { API_URL } from "../pages/api/url";
+import { API_URL } from "./api/url";
 import { UserIcon } from "../components/icons/User";
-import { updateUser } from "../pages/api/auth";
+import { updateUser } from "./api/auth";
 import UserCircle from "../components/icons/UserCircle";
-import { user } from "../pages/api/auth";
+import { user } from "./api/auth";
 import { useRouter } from "next/router";
-import { ToastContainer } from "react-toastify";
 
 const Profile = () => {
    const [username, setUsername] = useState("");
@@ -56,7 +55,6 @@ const Profile = () => {
                      css={{ size: "$20" }}
                   /> */}
                   <Input
-                     label={`Old Username: ${user?.username}`}
                      clearable
                      bordered
                      fullWidth
@@ -72,7 +70,6 @@ const Profile = () => {
                   />
 
                   <Input
-                     label={`Old Fullname: ${user?.fullname}`}
                      clearable
                      bordered
                      fullWidth
