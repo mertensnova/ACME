@@ -1,17 +1,13 @@
 import axios from "axios";
 import { GetServerSideProps } from "next";
-import AddPostModal from "../components/AddPostModal";
-import PostCard from "../components/Card";
 import { API_URL } from "./api/url";
-import NavBar from "../components/NavBar";
-import News from "../components/News";
-import { Container } from "@nextui-org/react";
+import Navigation from "../components/Navigation";
+import PostCard from "../components/PostCard";
 
 export default function Dashboard({ posts }: any) {
    return (
       <>
-         <NavBar />
-         <AddPostModal />
+         <Navigation />
          <PostCard posts={posts} />
       </>
    );
