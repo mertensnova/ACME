@@ -11,17 +11,23 @@ import {
    FormControl,
    FormLabel,
    Input,
+   InputRightElement,
+   InputGroup,
+   Textarea,
 } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
 import { API_URL } from "../pages/api/url";
 import { registerUser } from "../pages/api/auth";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export default function Signup() {
+   const [showPassword, setShowPassword] = useState(false);
    const [username, setUsername] = useState("");
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
    const [fullname, setFullname] = useState("");
+   const [bio, setBio] = useState("");
    const [image, setImage] = useState(null);
    const { isOpen, onOpen, onClose } = useDisclosure();
    const initialRef = React.useRef(null);
@@ -53,7 +59,14 @@ export default function Signup() {
             onSubmit={(e: any) => {
                e.preventDefault();
 
-               registerUser({ username, email, password, fullname, image });
+               registerUser({
+                  username,
+                  email,
+                  password,
+                  fullname,
+                  image,
+                  bio,
+               });
             }}
             method="post"
             action={`${API_URL}/register`}
@@ -61,6 +74,7 @@ export default function Signup() {
             id="signform"
          >
             <Modal
+               size={"xl"}
                initialFocusRef={initialRef}
                finalFocusRef={finalRef}
                isOpen={isOpen}
@@ -71,17 +85,18 @@ export default function Signup() {
                   <ModalHeader> Register account</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody pb={6}>
-                     <FormControl>
+                     <FormControl mt={4} isRequired>
                         <FormLabel>Fullname</FormLabel>
                         <Input
                            type={"text"}
                            ref={initialRef}
                            name="Fullname"
-                           value={username}
+                           value={fullname}
                            placeholder="Fullname"
                            onChange={(e: any) => setFullname(e.target.value)}
                         />
-
+                     </FormControl>
+                     <FormControl mt={4} isRequired>
                         <FormLabel>Username</FormLabel>
                         <Input
                            type={"text"}
@@ -92,24 +107,50 @@ export default function Signup() {
                            onChange={(e: any) => setUsername(e.target.value)}
                         />
                      </FormControl>
-                     <FormLabel>Email</FormLabel>
-                     <Input
-                        type={"text"}
-                        ref={initialRef}
-                        name="Email"
-                        value={email}
-                        placeholder="Email"
-                        onChange={(e: any) => setEmail(e.target.value)}
-                     />
-
-                     <FormControl mt={4}>
-                        <FormLabel>Password</FormLabel>
+                     <FormControl mt={4} isRequired>
+                        <FormLabel>Email</FormLabel>
                         <Input
-                           name="Password"
-                           value={password}
-                           placeholder="Password"
-                           onChange={(e) => setPassword(e.target.value)}
-                           type={"password"}
+                           type={"text"}
+                           ref={initialRef}
+                           name="Email"
+                           value={email}
+                           placeholder="Email"
+                           onChange={(e: any) => setEmail(e.target.value)}
+                        />
+                     </FormControl>
+
+                     <FormControl isRequired mt={4}>
+                        <FormLabel>Password</FormLabel>
+                        <InputGroup>
+                           <Input
+                              name="Password"
+                              value={password}
+                              placeholder="Password"
+                              onChange={(e) => setPassword(e.target.value)}
+                              type={showPassword ? "text" : "password"}
+                           />
+                           <InputRightElement h={"full"}>
+                              <Button
+                                 variant={"ghost"}
+                                 onClick={() =>
+                                    setShowPassword(
+                                       (showPassword) => !showPassword
+                                    )
+                                 }
+                              >
+                                 {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                              </Button>
+                           </InputRightElement>
+                        </InputGroup>
+                     </FormControl>
+                     <FormControl mt={4}>
+                        <FormLabel>Bio</FormLabel>
+                        <Textarea
+                           ref={initialRef}
+                           name="Bio"
+                           value={bio}
+                           placeholder="Bio"
+                           onChange={(e: any) => setBio(e.target.value)}
                         />
                      </FormControl>
                   </ModalBody>

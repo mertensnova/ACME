@@ -20,6 +20,8 @@ import {
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { API_URL } from "../pages/api/url";
 import { logout } from "../pages/api/auth";
+import { AcmeLogo } from "./icons/AcmeLogo";
+import { useRouter } from "next/router";
 
 const NavLink = ({ children }: { children: ReactNode }) => (
    <Link
@@ -40,6 +42,7 @@ export default function Navigation() {
    const { colorMode, toggleColorMode } = useColorMode();
    const { isOpen, onOpen, onClose } = useDisclosure();
    const [user, setUser] = useState<any>();
+   const router = useRouter();
 
    useEffect(() => {
       if (typeof window !== "undefined") {
@@ -57,9 +60,9 @@ export default function Navigation() {
       <>
          <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
             <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-               {/* <Box>
+               <Box>
                   <AcmeLogo />
-               </Box> */}
+               </Box>
 
                <Flex alignItems={"center"}>
                   <Stack direction={"row"} spacing={7}>
@@ -89,12 +92,14 @@ export default function Navigation() {
                            </Center>
 
                            <Center>
-                              <Text>{user?.username}</Text>
+                              <Text py={5}>{user?.email}</Text>
                            </Center>
 
                            <MenuDivider />
-                           <MenuItem>Your Servers</MenuItem>
-                           <MenuItem>Edit Profile</MenuItem>
+
+                           <MenuItem onClick={() => router.push("/@me")}>
+                              Edit Profile
+                           </MenuItem>
                            <MenuItem
                               onClick={() => {
                                  localStorage.removeItem("user");

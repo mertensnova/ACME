@@ -39,7 +39,7 @@ export default function ProfileCard({ data }: any) {
                }}
             />
             <Heading fontSize={"2xl"} fontFamily={"body"}>
-               @{data?.posts[0]?.Fullname}
+               {data?.posts[0]?.Fullname}
             </Heading>
             <Text fontWeight={600} color={"gray.500"} mb={4}>
                @{data?.posts[0]?.Username}
@@ -49,8 +49,7 @@ export default function ProfileCard({ data }: any) {
                color={useColorModeValue("gray.700", "gray.400")}
                px={3}
             >
-               Actress, musician, songwriter and artist. PM for work inquires or{" "}
-               me in your posts
+               {data?.posts[0]?.Bio}
             </Text>
          </Box>
       </Center>

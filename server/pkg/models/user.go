@@ -16,6 +16,7 @@ type Users struct{
     Password string `form:"Password" json:"password"`
     Email    string  `gorm:"unique" form:"Email" json:"email"`
 	Profile string 	`form:"Image" json:"image"`
+	Bio		string 	`form:"Bio" json:"bio"`
 	Posts []Posts  	`gorm:"foreignKey:UserID;references:ID"`
 	LikedPosts []Likes `gorm:"foreignKey:PostID;references:ID"`
 }
@@ -45,14 +46,14 @@ func GetAllUsers() []Users{
 func GetPostsOfUser(id uint64) ([]Result,[]Result){
 	var posts []Result
 	var liked_posts []Result
-	db.Raw("SELECT posts.id,fullname,username,content,email,profile,likes,user_id from posts JOIN users ON posts.user_id = users.id WHERE users.id = ?",id).Scan(&posts)
+	db.Raw("SELECT posts.id,fullname,username,content,email,profile,likes,user_id,bio from posts JOIN users ON posts.user_id = users.id WHERE users.id = ?",id).Scan(&posts)
 	db.Raw("SELECT * from posts JOIN likes ON posts.id = likes.post_id JOIN users ON posts.user_id = users.id WHERE likes.user_id = ?",id).Scan(&liked_posts)
 	return posts ,liked_posts
 }
 
 func (user *Users) UpdateUser() *Users {
 	var new_info *Users
-	db.Model(&user).Where("ID = ?",user.ID).Updates(Users{Fullname: user.Fullname, Username:user.Username})
+	db.Model(&user).Where("ID = ?",user.ID).Updates(Users{Fullname: user.Fullname, Username:user.Username,Bio: user.Bio})
 	db.First(&new_info,user.ID)
 	return new_info
 }

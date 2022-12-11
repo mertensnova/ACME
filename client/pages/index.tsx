@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { AcmeLogo } from "../components/icons/Logo";
+import { AcmeLogo } from "../components/icons/AcmeLogo";
 
 import {
    Flex,
@@ -41,17 +41,17 @@ export default function Home() {
                            zIndex: -1,
                         }}
                      >
-                        Freelance
+                        <AcmeLogo /> ACME
                      </Text>
                      <br />{" "}
                      <Text color={"blue.400"} as={"span"}>
-                        Design Projects
+                        Write your thoughts
                      </Text>{" "}
                   </Heading>
                   <Text fontSize={{ base: "md", lg: "lg" }} color={"gray.500"}>
-                     The project board is an exclusive resource for contract
-                     work. Its perfect for freelancers, agencies, and
-                     moonlighters.
+                     We are making it easy for you to write and publish your
+                     thoughts. We have a simple, clean interface, so you can get
+                     started right away.
                   </Text>
                   <Stack direction={{ base: "column", md: "row" }} spacing={4}>
                      <Signup />

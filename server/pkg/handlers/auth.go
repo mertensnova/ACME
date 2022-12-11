@@ -56,6 +56,7 @@ func RegisterUser(c echo.Context) error {
     Username: u.Username,
     Password: hash,
     Email: u.Email,
+	Bio: u.Bio,
 	// Profile: utils.ServeFrames(u.Profile),
   	}
 

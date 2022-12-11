@@ -11,15 +11,20 @@ import {
    FormControl,
    FormLabel,
    Input,
+   InputGroup,
+   InputRightElement,
 } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
 import { API_URL } from "../pages/api/url";
 import { loginUser } from "../pages/api/auth";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export default function Login() {
+   const [showPassword, setShowPassword] = useState(false);
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
+
    const { isOpen, onOpen, onClose } = useDisclosure();
 
    const initialRef = React.useRef(null);
@@ -62,15 +67,29 @@ export default function Login() {
                         />
                      </FormControl>
 
-                     <FormControl mt={4}>
+                     <FormControl isRequired mt={4}>
                         <FormLabel>Password</FormLabel>
-                        <Input
-                           name="Password"
-                           value={password}
-                           placeholder="Password"
-                           onChange={(e) => setPassword(e.target.value)}
-                           type={"password"}
-                        />
+                        <InputGroup>
+                           <Input
+                              name="Password"
+                              value={password}
+                              placeholder="Password"
+                              onChange={(e) => setPassword(e.target.value)}
+                              type={showPassword ? "text" : "password"}
+                           />
+                           <InputRightElement h={"full"}>
+                              <Button
+                                 variant={"ghost"}
+                                 onClick={() =>
+                                    setShowPassword(
+                                       (showPassword) => !showPassword
+                                    )
+                                 }
+                              >
+                                 {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                              </Button>
+                           </InputRightElement>
+                        </InputGroup>
                      </FormControl>
                   </ModalBody>
 

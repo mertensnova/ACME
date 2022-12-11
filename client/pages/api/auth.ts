@@ -2,23 +2,13 @@ import axios from "axios";
 import { API_URL } from "./url";
 import "react-toastify/dist/ReactToastify.css";
 
-export let user: any;
-
-// export const getUserById = async (id: any) => {
-//    try {
-//       const response = await axios.get(`${API_URL}/user/${id}`);
-//       return response;
-//    } catch (error) {
-//       console.log(error);
-//    }
-// };
-
-export const updateUser = async ({ username, fullname, id }: any) => {
+export const updateUser = async ({ username, fullname, id, bio }: any) => {
    try {
       const response = await axios.patch(`${API_URL}/@me`, {
          id,
          username,
          fullname,
+         bio,
       });
       if (response.status === 200) {
          localStorage.setItem("user", JSON.stringify(response.data));
@@ -37,6 +27,7 @@ export const registerUser = async ({
    password,
    fullname,
    image,
+   bio,
 }: any) => {
    try {
       const response = await axios.post(
@@ -47,6 +38,7 @@ export const registerUser = async ({
             password,
             fullname,
             image,
+            bio,
          },
          { withCredentials: true }
       );

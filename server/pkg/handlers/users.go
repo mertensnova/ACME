@@ -36,6 +36,7 @@ func UpdateUser(c echo.Context) error {
 		ID: user.ID,
 		Fullname: user.Fullname,
 		Username: user.Username,
+		Bio: user.Bio,
 	}
 
 	new_data:= u.UpdateUser()

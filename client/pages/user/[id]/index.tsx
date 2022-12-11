@@ -6,15 +6,29 @@ import { API_URL } from "../../api/url";
 import PostCard from "../../../components/PostCard";
 import ProfileCard from "../../../components/ProfileCard";
 import Navigation from "../../../components/Navigation";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 
 const User = ({ user }: any) => {
-   const [kind, setKind] = useState("posts");
+   console.log(user);
 
    return (
       <>
          <Navigation />
          <ProfileCard data={user} />
-         <PostCard posts={user[kind]} />
+         <Tabs isFitted variant="enclosed" colorScheme="blue">
+            <TabList>
+               <Tab>Posts</Tab>
+               <Tab>Likes</Tab>
+            </TabList>
+            <TabPanels>
+               <TabPanel>
+                  <PostCard posts={user["posts"]} />
+               </TabPanel>
+               <TabPanel>
+                  <PostCard posts={user["liked"]} />
+               </TabPanel>
+            </TabPanels>
+         </Tabs>
       </>
    );
 };

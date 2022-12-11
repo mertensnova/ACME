@@ -14,15 +14,17 @@ import {
    DrawerContent,
    DrawerCloseButton,
    useDisclosure,
+   IconButton,
+   useMediaQuery,
 } from "@chakra-ui/react";
 import { Textarea } from "@chakra-ui/react";
-import { user } from "../pages/api/auth";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { API_URL } from "../pages/api/url";
-import { AddIcon } from "@chakra-ui/icons";
+import { BsPenFill } from "react-icons/bs";
 
 const WritePost = () => {
+   const [isLessThan520] = useMediaQuery("(max-width: 520px)");
    const { isOpen, onOpen, onClose } = useDisclosure();
    const router = useRouter();
    const [user, setUser] = useState<any>();
@@ -62,9 +64,36 @@ const WritePost = () => {
 
    return (
       <>
-         <Button leftIcon={<AddIcon />} colorScheme="blue" onClick={onOpen}>
-            Add new post
-         </Button>
+         {isLessThan520 ? (
+            <IconButton
+               pos="fixed"
+               bottom="80px"
+               right="80px"
+               zIndex={10}
+               borderRadius={9999}
+               width={"60px"}
+               height={"60px"}
+               icon={<BsPenFill />}
+               colorScheme="blue"
+               onClick={onOpen}
+               aria-label={""}
+            ></IconButton>
+         ) : (
+            <IconButton
+               pos="fixed"
+               bottom="150px"
+               right="160px"
+               zIndex={10}
+               borderRadius={9999}
+               width={"60px"}
+               height={"60px"}
+               icon={<BsPenFill />}
+               colorScheme="blue"
+               onClick={onOpen}
+               aria-label={""}
+            ></IconButton>
+         )}
+
          <form
             onSubmit={(e: any) => {
                e.preventDefault();

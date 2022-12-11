@@ -10,16 +10,14 @@ import {
    Box,
    Text,
    Button,
-   IconButton,
+   useColorModeValue,
    Divider,
    Center,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-// import { user } from "../pages/api/auth";
 import { API_URL } from "../pages/api/url";
 import WritePost from "./WritePost";
 import { BiLike, BiShare, BiChat } from "react-icons/bi";
-
 import axios from "axios";
 import DropdownMenu from "./DropdownMenu";
 
@@ -58,7 +56,7 @@ const PostCard = ({ posts }: any) => {
       <Center>
          <Flex flexDirection={"column"}>
             <WritePost />
-            <Divider orientation="horizontal" />
+
             {posts?.map((value: any) => {
                const {
                   Fullname,
@@ -72,8 +70,7 @@ const PostCard = ({ posts }: any) => {
 
                return (
                   <>
-                     <Divider orientation="horizontal" />
-                     <Card data-key={ID} margin={"5"} key={ID} minW="md">
+                     <Card data-key={ID} margin={"5"} key={ID} minW="sm">
                         <CardHeader>
                            <Flex>
                               <Flex
@@ -89,7 +86,15 @@ const PostCard = ({ posts }: any) => {
 
                                  <Box>
                                     <Heading size="sm">{Fullname}</Heading>
-                                    <Text>@{Username}</Text>
+                                    <Text
+                                       // eslint-disable-next-line react-hooks/rules-of-hooks
+                                       color={useColorModeValue(
+                                          "gray.700",
+                                          "gray.400"
+                                       )}
+                                    >
+                                       @{Username}
+                                    </Text>
                                  </Box>
                               </Flex>
                               <DropdownMenu userid={UserID} />
@@ -134,15 +139,9 @@ const PostCard = ({ posts }: any) => {
                            >
                               Comment
                            </Button>
-                           <Button
-                              flex="1"
-                              variant="ghost"
-                              leftIcon={<BiShare />}
-                           >
-                              Share
-                           </Button>
                         </CardFooter>
                      </Card>
+                     <Divider orientation="horizontal" />
                   </>
                );
             })}
