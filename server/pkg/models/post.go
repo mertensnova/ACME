@@ -51,3 +51,9 @@ func (post *Posts) EditPost() *Posts{
 	db.Model(&post).Where("ID = ?",post.ID).Updates(Posts{Content: post.Content})
 	return post
 }
+
+func DeletePost(id string) Posts{
+    var deletePost Posts
+	db.Unscoped().Delete(&Posts{}, id)
+	return deletePost
+}

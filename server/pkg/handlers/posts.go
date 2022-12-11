@@ -49,3 +49,10 @@ func EditPost(c echo.Context) error {
 
 }
 
+
+func DeletePost(c echo.Context) error {
+	id := c.Param("id")
+    deletedPost:= models.DeletePost(id)
+    return c.JSON(http.StatusOK,deletedPost)
+}
+

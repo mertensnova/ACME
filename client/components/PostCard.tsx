@@ -13,6 +13,7 @@ import {
    useColorModeValue,
    Divider,
    Center,
+   // Image,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { API_URL } from "../pages/api/url";
@@ -20,8 +21,10 @@ import WritePost from "./WritePost";
 import { BiLike, BiShare, BiChat } from "react-icons/bi";
 import axios from "axios";
 import DropdownMenu from "./DropdownMenu";
+import { useToast } from "@chakra-ui/react";
 
 const PostCard = ({ posts }: any) => {
+   const toast = useToast();
    const [user, setUser] = useState<any>();
    const router = useRouter();
    const userId = user?.ID;
@@ -46,12 +49,27 @@ const PostCard = ({ posts }: any) => {
             { userId, postId },
             { withCredentials: true }
          );
+         if (response.status == 200) {
+            toast({
+               title: `You liked the post`,
+               position: "top-right",
+               status: "success",
+               isClosable: true,
+            });
+         }
          router.replace(router.asPath);
          return response.data;
       } catch (error) {
+         toast({
+            title: `Server error`,
+            position: "top-right",
+            status: "error",
+            isClosable: true,
+         });
          console.log(error);
       }
    };
+
    return (
       <Center>
          <Flex flexDirection={"column"}>
@@ -70,7 +88,7 @@ const PostCard = ({ posts }: any) => {
 
                return (
                   <>
-                     <Card data-key={ID} margin={"5"} key={ID} minW="sm">
+                     <Card data-key={ID} margin={"5"} key={ID}>
                         <CardHeader>
                            <Flex>
                               <Flex

@@ -43,7 +43,7 @@ func main() {
 	app.POST("/add-post",handlers.AddPost)
 	app.GET("/dashboard", handlers.GetAllPosts)
 	app.POST("/like-post", handlers.LikePost)
-	// app.DELETE("/post/:id", handlers.DeletePost)
+	app.DELETE("/post/:id", handlers.DeletePost)
 	app.PATCH("/@my-post", handlers.EditPost)
 
 	app.Logger.Fatal(app.Start(":8080"))

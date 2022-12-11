@@ -10,9 +10,16 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { BiUser } from "react-icons/bi";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import Link from "next/link";
+import { useToast } from "@chakra-ui/react";
+import { API_URL } from "../pages/api/url";
+import { useRouter } from "next/router";
+import axios from "axios";
 
 const DropdownMenu = (userID: any) => {
    const [user, setUser] = useState<any>();
+   const router = useRouter();
+
+   const toast = useToast();
 
    useEffect(() => {
       if (typeof window !== "undefined") {
@@ -26,6 +33,36 @@ const DropdownMenu = (userID: any) => {
       }
    }, []);
 
+   const deletePost = async (e: any) => {
+      try {
+         const postId = parseInt(e);
+         const response = await axios.delete(
+            `${API_URL}/post/${postId}`,
+
+            { withCredentials: true }
+         );
+         if (response.status == 200) {
+            toast({
+               title: `Post deleted successfully`,
+               position: "top-right",
+               status: "success",
+               isClosable: true,
+            });
+         }
+         router.replace(router.asPath);
+
+         return response.data;
+      } catch (error) {
+         toast({
+            title: `Server error`,
+            position: "top-right",
+            status: "error",
+            isClosable: true,
+         });
+         console.log(error);
+      }
+   };
+
    return (
       <Menu>
          <MenuButton
@@ -35,15 +72,27 @@ const DropdownMenu = (userID: any) => {
             variant="outline"
          />
          <MenuList>
-            {/* <MenuItem icon={<BiUser />}> */}
-            <Link href="/user/[id]" as={`/user/${userID?.userid}`}>
+            <MenuItem
+               onClick={() => router.push(`/user/${userID?.userid}`)}
+               icon={<BiUser />}
+            >
                View User
-            </Link>
-            {/* </MenuItem> */}
+            </MenuItem>
             {user?.ID == userID?.userid ? (
                <div>
                   <MenuItem icon={<EditIcon />}>Edit Post</MenuItem>
-                  <MenuItem icon={<DeleteIcon />}>Delete Post</MenuItem>
+                  <MenuItem
+                     onClick={(e: any) => {
+                        deletePost(
+                           e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute(
+                              "data-key"
+                           )
+                        );
+                     }}
+                     icon={<DeleteIcon />}
+                  >
+                     Delete Post
+                  </MenuItem>
                </div>
             ) : (
                <div></div>
