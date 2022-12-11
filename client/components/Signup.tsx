@@ -18,10 +18,12 @@ import {
 import React from "react";
 import { useState } from "react";
 import { API_URL } from "../pages/api/url";
-import { registerUser } from "../pages/api/auth";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useToast } from "@chakra-ui/react";
+import axios from "axios";
 
 export default function Signup() {
+   const toast = useToast();
    const [showPassword, setShowPassword] = useState(false);
    const [username, setUsername] = useState("");
    const [email, setEmail] = useState("");
@@ -40,6 +42,51 @@ export default function Signup() {
          setImage(e.target.result);
       };
       fileReader.readAsDataURL(file);
+   };
+
+   const registerUser = async ({
+      username,
+      email,
+      password,
+      fullname,
+      image,
+      bio,
+   }: any) => {
+      try {
+         const response = await axios.post(
+            `${API_URL}/register`,
+            {
+               username,
+               email,
+               password,
+               fullname,
+               image,
+               bio,
+            },
+            { withCredentials: true }
+         );
+
+         if (response.status === 200) {
+            toast({
+               title: `Registered successfully`,
+               position: "top-right",
+               status: "success",
+               isClosable: true,
+            });
+            localStorage.setItem("user", JSON.stringify(response.data));
+            window.location.href = "/dashboard";
+         }
+
+         return response.data;
+      } catch (error: any) {
+         toast({
+            title: `Username or email are taken`,
+            position: "top-right",
+            status: "success",
+            isClosable: true,
+         });
+         console.log(error);
+      }
    };
 
    return (

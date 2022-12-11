@@ -18,15 +18,48 @@ import { SmallCloseIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { API_URL } from "../pages/api/url";
 import { useRouter } from "next/router";
-import { updateUser } from "../pages/api/auth";
+import axios from "axios";
+import { useToast } from "@chakra-ui/react";
 
 export default function UserProfileEdit(): JSX.Element {
+   const toast = useToast();
    const [username, setUsername] = useState("");
    const [fullname, setFullname] = useState("");
    const [bio, setBio] = useState("");
    const [user, setUser] = useState<any>();
    const id = user?.ID;
    const router = useRouter();
+
+   const updateUser = async ({ username, fullname, id, bio }: any) => {
+      try {
+         const response = await axios.patch(`${API_URL}/@me`, {
+            id,
+            username,
+            fullname,
+            bio,
+         });
+         if (response.status === 200) {
+            toast({
+               title: `Updated successfully`,
+               position: "top-right",
+               status: "success",
+               isClosable: true,
+            });
+            localStorage.setItem("user", JSON.stringify(response.data));
+            window.location.href = "/dashboard";
+         }
+
+         return response;
+      } catch (error) {
+         toast({
+            title:  `Error has occurred`,
+            position: "top-right",
+            status: "error",
+            isClosable: true,
+         });
+         console.log(error);
+      }
+   };
 
    useEffect(() => {
       if (typeof window !== "undefined") {

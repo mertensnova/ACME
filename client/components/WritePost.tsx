@@ -22,8 +22,10 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { API_URL } from "../pages/api/url";
 import { BsPenFill } from "react-icons/bs";
+import { useToast } from "@chakra-ui/react";
 
 const WritePost = () => {
+   const toast = useToast();
    const [isLessThan520] = useMediaQuery("(max-width: 520px)");
    const { isOpen, onOpen, onClose } = useDisclosure();
    const router = useRouter();
@@ -54,10 +56,24 @@ const WritePost = () => {
             },
             { withCredentials: true }
          );
+         if (response.status == 200) {
+            toast({
+               title: `Posted successfully`,
+               position: "top-right",
+               status: "success",
+               isClosable: true,
+            });
+         }
 
          router.replace(router.asPath);
          return response;
       } catch (error) {
+         toast({
+            title: "Error has occured",
+            status: "error",
+            position: "top-right",
+            isClosable: true,
+         });
          console.log(error);
       }
    };

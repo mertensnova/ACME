@@ -17,13 +17,49 @@ import {
 import React from "react";
 import { useState } from "react";
 import { API_URL } from "../pages/api/url";
-import { loginUser } from "../pages/api/auth";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import axios from "axios";
+import { useToast } from "@chakra-ui/react";
 
 export default function Login() {
+   const toast = useToast();
    const [showPassword, setShowPassword] = useState(false);
    const [username, setUsername] = useState("");
    const [password, setPassword] = useState("");
+
+   const loginUser = async ({ username, password }: any) => {
+      try {
+         const response = await axios.post(
+            `${API_URL}/login`,
+            {
+               username,
+               password,
+            },
+            { withCredentials: true }
+         );
+
+         if (response.status === 200) {
+            toast({
+               title: `Login  successfully`,
+               position: "top-right",
+               status: "success",
+               isClosable: true,
+            });
+            localStorage.setItem("user", JSON.stringify(response.data));
+            window.location.href = "/dashboard";
+         }
+
+         return response.data;
+      } catch (error: any) {
+         toast({
+            title: `Invalid Credentials`,
+            position: "top-right",
+            status: "error",
+            isClosable: true,
+         });
+         console.log(error);
+      }
+   };
 
    const { isOpen, onOpen, onClose } = useDisclosure();
 

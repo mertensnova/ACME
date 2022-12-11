@@ -19,9 +19,10 @@ import {
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { API_URL } from "../pages/api/url";
-import { logout } from "../pages/api/auth";
 import { AcmeLogo } from "./icons/AcmeLogo";
 import { useRouter } from "next/router";
+import { useToast } from "@chakra-ui/react";
+import axios from "axios";
 
 const NavLink = ({ children }: { children: ReactNode }) => (
    <Link
@@ -43,6 +44,35 @@ export default function Navigation() {
    const { isOpen, onOpen, onClose } = useDisclosure();
    const [user, setUser] = useState<any>();
    const router = useRouter();
+
+   const toast = useToast();
+
+   const logout = async () => {
+      try {
+         const resp = await axios.get(`${API_URL}/logout`, {
+            withCredentials: true,
+         });
+         if (resp.status == 200) {
+            toast({
+               title: `You have been logged out`,
+               position: "top-right",
+               status: "success",
+               isClosable: true,
+            });
+            window.location.href = "/";
+         }
+
+         return resp;
+      } catch (error) {
+         toast({
+            title: `Server error`,
+            position: "top-right",
+            status: "error",
+            isClosable: true,
+         });
+         console.log(error);
+      }
+   };
 
    useEffect(() => {
       if (typeof window !== "undefined") {
