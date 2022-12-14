@@ -13,21 +13,27 @@ import {
    useColorModeValue,
    Divider,
    Center,
-   // Image,
+   Image,
+   useMediaQuery,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { API_URL } from "../pages/api/url";
 import WritePost from "./WritePost";
-import { BiLike, BiShare, BiChat } from "react-icons/bi";
+import { BiLike, BiChat } from "react-icons/bi";
 import axios from "axios";
 import DropdownMenu from "./DropdownMenu";
 import { useToast } from "@chakra-ui/react";
+import moment from "moment";
 
 const PostCard = ({ posts }: any) => {
    const toast = useToast();
    const [user, setUser] = useState<any>();
    const router = useRouter();
    const userId = user?.ID;
+   const [edit, setEdit] = useState(false);
+   const [isLessThan500] = useMediaQuery("(min-width: 500px)");
+
+   const size = isLessThan500 ? "md" : "";
 
    useEffect(() => {
       if (typeof window !== "undefined") {
@@ -84,11 +90,12 @@ const PostCard = ({ posts }: any) => {
                   Likes,
                   UserID,
                   Profile,
+                  CreatedAt,
                } = value;
 
                return (
                   <>
-                     <Card data-key={ID} margin={"5"} key={ID}>
+                     <Card data-key={ID} margin={"5"} key={ID} w={size}>
                         <CardHeader>
                            <Flex>
                               <Flex
@@ -112,6 +119,17 @@ const PostCard = ({ posts }: any) => {
                                        )}
                                     >
                                        @{Username}
+                                    </Text>
+                                    <Text
+                                       // eslint-disable-next-line react-hooks/rules-of-hooks
+                                       color={useColorModeValue(
+                                          "gray.700",
+                                          "gray.400"
+                                       )}
+                                    >
+                                       {moment(CreatedAt)
+                                          .startOf("second")
+                                          .fromNow()}
                                     </Text>
                                  </Box>
                               </Flex>

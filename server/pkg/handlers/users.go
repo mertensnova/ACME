@@ -13,7 +13,7 @@ func GetAllUsers(c echo.Context) error {
 	return c.JSON(http.StatusOK,allUsers)
 }
 
-func GetPostsOfUser(c echo.Context) error {
+func GetUserByID(c echo.Context) error {
 	id,err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest,"Bad Request")

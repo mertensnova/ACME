@@ -126,6 +126,11 @@ export default function Navigation() {
                            </Center>
 
                            <MenuDivider />
+                           <MenuItem
+                              onClick={() => router.push(`/user/${user?.ID}`)}
+                           >
+                              Your Profile
+                           </MenuItem>
 
                            <MenuItem onClick={() => router.push("/@me")}>
                               Edit Profile

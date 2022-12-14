@@ -24,6 +24,7 @@ type Result struct {
 	Bio string
 	Likes int
 	UserID int
+	CreatedAt string
 }
 
 func init()  {
@@ -43,8 +44,14 @@ func (post *Posts) AddPost() *Posts{
 
 func GetAllPosts() []Result{
 	var result []Result
-	db.Raw("SELECT posts.id,fullname,username,content,email,profile,likes,user_id,bio from posts JOIN users ON posts.user_id = users.id").Scan(&result)
+	db.Raw("SELECT posts.id,fullname,username,content,email,profile,likes,user_id,bio,posts.created_at from posts JOIN users ON posts.user_id = users.id").Scan(&result)
     return result
+}
+
+func GetPostByID(id string) Result{
+	var post Result
+	db.Raw("SELECT posts.id,fullname,username,content,email,profile,likes,user_id,bio,posts.created_at from posts JOIN users ON posts.user_id = users.id WHERE posts.id = ?",id).Scan(&post)
+	return post
 }
 
 func (post *Posts) EditPost() *Posts{

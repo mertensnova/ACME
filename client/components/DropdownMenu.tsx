@@ -9,15 +9,16 @@ import {
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { BiUser } from "react-icons/bi";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import Link from "next/link";
 import { useToast } from "@chakra-ui/react";
 import { API_URL } from "../pages/api/url";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { EditPostCard } from "./EditCard";
 
 const DropdownMenu = (userID: any) => {
    const [user, setUser] = useState<any>();
    const router = useRouter();
+   // const [id,setID] = useState()
 
    const toast = useToast();
 
@@ -72,15 +73,10 @@ const DropdownMenu = (userID: any) => {
             variant="outline"
          />
          <MenuList>
-            <MenuItem
-               onClick={() => router.push(`/user/${userID?.userid}`)}
-               icon={<BiUser />}
-            >
-               View User
-            </MenuItem>
             {user?.ID == userID?.userid ? (
                <div>
-                  <MenuItem icon={<EditIcon />}>Edit Post</MenuItem>
+                  <EditPostCard />
+
                   <MenuItem
                      onClick={(e: any) => {
                         deletePost(
@@ -95,7 +91,12 @@ const DropdownMenu = (userID: any) => {
                   </MenuItem>
                </div>
             ) : (
-               <div></div>
+               <MenuItem
+                  onClick={() => router.push(`/user/${userID?.userid}`)}
+                  icon={<BiUser />}
+               >
+                  View User
+               </MenuItem>
             )}
          </MenuList>
       </Menu>
