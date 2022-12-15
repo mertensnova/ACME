@@ -13,54 +13,118 @@ import {
    EditablePreview,
    MenuItem,
    EditableTextarea,
+   useToast,
+   EditableInput,
+   Input,
+   ButtonGroup,
+   Flex,
+   IconButton,
+   useEditableControls,
 } from "@chakra-ui/react";
 import { API_URL } from "../pages/api/url";
-import { EditIcon } from "@chakra-ui/icons";
+import { CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
+import axios from "axios";
+import router from "next/router";
 
-export function EditPostCard() {
+export function EditPostCard({ postid }: any) {
+   const toast = useToast();
    const { isOpen, onOpen, onClose } = useDisclosure();
-   const [content, setContent] = useState("Hello World");
+   const [oldContent, setOldContent] = useState("");
+   const [newContent, setNewContent] = useState("");
 
    const initialRef = React.useRef(null);
    const finalRef = React.useRef(null);
 
-   // const editPost = async (postId: any) => {
-   //    console.log(postId);
-   //    try {
-   //       const response = await axios.patch(`${API_URL}/@my-post/${postId}`, {
-   //          withCredentials: true,
-   //       });
-   //       if (response.status == 200) {
-   //          toast({
-   //             title: `Post edited`,
-   //             position: "top-right",
-   //             status: "success",
-   //             isClosable: true,
-   //          });
-   //       }
-   //       router.replace(router.asPath);
-   //       return response.data;
-   //    } catch (error) {
-   //       toast({
-   //          title: `Server error`,
-   //          position: "top-right",
-   //          status: "error",
-   //          isClosable: true,
-   //       });
-   //       console.log(error);
-   //    }
-   // };
+   const getPostById = async () => {
+      try {
+         const response = await axios.get(`${API_URL}/thispost/${postid}`);
+         setOldContent(response.data[0]?.Content);
+
+         return response.data[0]?.Content;
+      } catch (error) {
+         console.log(error);
+      }
+   };
+   getPostById();
+
+   const editPost = async () => {
+      try {
+         const response = await axios.patch(
+            `${API_URL}/@my-post/${postid}`,
+            { Content: newContent },
+            {
+               withCredentials: true,
+            }
+         );
+         if (response.status == 200) {
+            toast({
+               title: `Post edited`,
+               position: "top-right",
+               status: "success",
+               isClosable: true,
+            });
+         }
+
+         router.replace(router.asPath);
+         setOldContent(response.data?.old?.content);
+
+         return response.data;
+      } catch (error) {
+         toast({
+            title: `Server error`,
+            position: "top-right",
+            status: "error",
+            isClosable: true,
+         });
+         console.log(error);
+      }
+   };
+
+   /* Here's a custom control */
+   function EditableControls() {
+      const {
+         isEditing,
+         getSubmitButtonProps,
+         getCancelButtonProps,
+         getEditButtonProps,
+      } = useEditableControls();
+
+      return isEditing ? (
+         <ButtonGroup justifyContent="center" size="sm">
+            <IconButton
+               aria-label={""}
+               icon={<CheckIcon />}
+               {...getSubmitButtonProps()}
+            />
+
+            <IconButton
+               aria-label={""}
+               icon={<CloseIcon />}
+               {...getCancelButtonProps()}
+            />
+         </ButtonGroup>
+      ) : (
+         <Flex justifyContent="center">
+            <IconButton
+               aria-label={""}
+               size="sm"
+               icon={<EditIcon />}
+               {...getEditButtonProps()}
+            />
+         </Flex>
+      );
+   }
 
    return (
       <>
          <form
             onSubmit={(e: any) => {
                e.preventDefault();
-               // editPost(e);
+               editPost();
             }}
-            action={`${API_URL}/@my-post/:id`}
-            method="POST"
-            id="postform"
+            action={`${API_URL}/@my-post/${postid}`}
+            method="PATCH"
+            id="editform"
          >
             <MenuItem onClick={onOpen} icon={<EditIcon />}>
                Edit Post
@@ -77,14 +141,28 @@ export function EditPostCard() {
                   <ModalHeader>Edit your post</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody pb={6}>
-                     <Editable defaultValue={content}>
+                     <Editable
+                        textAlign="center"
+                        defaultValue={oldContent}
+                        fontSize="2xl"
+                        isPreviewFocusable={false}
+                     >
                         <EditablePreview />
-                        <EditableTextarea />
+                        <Input
+                           name="content"
+                           form="editform"
+                           onChange={(e: any) => setNewContent(e.target.value)}
+                           as={EditableInput}
+                        />
+                        <EditableControls />
                      </Editable>
                   </ModalBody>
                   <ModalFooter>
                      <Button
-                        // onClick={(e: any) => editPost(e)}
+                        onClick={() => {
+                           onClose();
+                           editPost();
+                        }}
                         colorScheme="blue"
                         mr={3}
                      >

@@ -55,6 +55,7 @@ func GetPostByID(id string) Result{
 }
 
 func (post *Posts) EditPost() *Posts{
+	
 	db.Model(&post).Where("ID = ?",post.ID).Updates(Posts{Content: post.Content})
 	return post
 }

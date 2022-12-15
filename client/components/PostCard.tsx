@@ -133,7 +133,7 @@ const PostCard = ({ posts }: any) => {
                                     </Text>
                                  </Box>
                               </Flex>
-                              <DropdownMenu userid={UserID} />
+                              <DropdownMenu userid={UserID} postid={ID} />
                            </Flex>
                         </CardHeader>
                         <CardBody>

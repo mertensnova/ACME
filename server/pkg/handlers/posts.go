@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"server/pkg/models"
 	"strconv"
@@ -35,8 +34,8 @@ func GetAllPosts(c echo.Context) error {
 }
 
 func GetPostByID(c echo.Context) error {
-	allPosts := models.GetAllPosts()
-	return c.JSON(http.StatusOK,allPosts)
+	post := models.GetAllPosts()
+	return c.JSON(http.StatusOK,post)
 }
 
 func EditPost(c echo.Context) error {
@@ -49,8 +48,6 @@ func EditPost(c echo.Context) error {
 		ID: id,
 		Content: post.Content,
 	}
-	// fmt.Println("HELLO WORLD")
-	fmt.Println(post.Content)
 
 	new_data:= p.EditPost()
 
