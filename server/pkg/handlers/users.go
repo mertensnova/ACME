@@ -19,8 +19,9 @@ func GetUserByID(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest,"Bad Request")
 	}
 	
-	user_posts,user_liked_posts := models.GetPostsOfUser(id);
+	user_posts,user_liked_posts,user_info := models.GetPostsOfUser(id);
 	return c.JSON(http.StatusOK, echo.Map{
+		"user": user_info,
 		"posts": user_posts,
 		"liked": user_liked_posts,
 	})

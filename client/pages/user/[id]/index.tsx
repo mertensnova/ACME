@@ -9,8 +9,6 @@ import Navigation from "../../../components/Navigation";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 
 const User = ({ user }: any) => {
-   console.log(user);
-
    return (
       <>
          <Navigation />

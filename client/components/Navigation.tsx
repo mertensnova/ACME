@@ -109,6 +109,7 @@ export default function Navigation() {
                            minW={0}
                         >
                            <Avatar
+                              name={user?.fullname}
                               size={"sm"}
                               src={`${API_URL}/${user?.image}`}
                            />
@@ -116,6 +117,7 @@ export default function Navigation() {
                         <MenuList alignItems={"center"}>
                            <Center>
                               <Avatar
+                                 name={user?.fullname}
                                  size={"2xl"}
                                  src={`${API_URL}/${user?.image}`}
                               />

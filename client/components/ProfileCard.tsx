@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { API_URL } from "../pages/api/url";
 import {
    Heading,
@@ -10,6 +10,20 @@ import {
 } from "@chakra-ui/react";
 
 export default function ProfileCard({ data }: any) {
+   const [user, setUser] = useState<any>();
+
+   useEffect(() => {
+      if (typeof window !== "undefined") {
+         try {
+            setUser(JSON.parse(localStorage.getItem("user") ?? ""));
+         } catch (error) {
+            console.log(error);
+         }
+      } else {
+         console.log("You are on the server");
+      }
+   }, []);
+
    return (
       <Center py={6}>
          <Box
@@ -22,8 +36,9 @@ export default function ProfileCard({ data }: any) {
             textAlign={"center"}
          >
             <Avatar
+               name={data?.user?.fullname}
                size={"xl"}
-               src={`${API_URL}/${data?.posts[0]?.Profile}`}
+               src={`${API_URL}/${data?.user?.profile}`}
                mb={4}
                pos={"relative"}
                _after={{
@@ -39,17 +54,17 @@ export default function ProfileCard({ data }: any) {
                }}
             />
             <Heading fontSize={"2xl"} fontFamily={"body"}>
-               {data?.posts[0]?.Fullname}
+               {data?.user?.fullname}
             </Heading>
             <Text fontWeight={600} color={"gray.500"} mb={4}>
-               @{data?.posts[0]?.Username}
+               @{data?.user?.username}
             </Text>
             <Text
                textAlign={"center"}
                color={useColorModeValue("gray.700", "gray.400")}
                px={3}
             >
-               {data?.posts[0]?.Bio}
+               {data?.user?.bio}
             </Text>
          </Box>
       </Center>

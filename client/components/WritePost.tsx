@@ -124,14 +124,14 @@ const WritePost = () => {
                <DrawerContent>
                   <DrawerCloseButton />
                   <DrawerHeader borderBottomWidth="1px">
-                     Create a post
+                     What are your thoughts ?
                   </DrawerHeader>
 
                   <DrawerBody>
                      <Stack spacing="24px">
                         <Box>
-                           <FormLabel htmlFor="desc">Content</FormLabel>
                            <Textarea
+                              size={"md"}
                               form="postform"
                               onChange={(e: any) => setContent(e.target.value)}
                               id="desc"
