@@ -20,6 +20,10 @@ func LikePost(c echo.Context) error {
   	}
 
 	// Add to database
-	b := like.LikePost()	
+	b,exists := like.LikePost()	
+	if exists.Exists {
+		return c.JSON(http.StatusNotAcceptable, "Already liked the post")
+	}
+
 	return c.JSON(http.StatusOK, b)
 }

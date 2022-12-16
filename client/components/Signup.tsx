@@ -80,9 +80,9 @@ export default function Signup() {
          return response.data;
       } catch (error: any) {
          toast({
-            title: `Username or email are taken`,
+            title: error?.response?.data ?? "Server Error",
             position: "top-right",
-            status: "success",
+            status: "error",
             isClosable: true,
          });
          console.log(error);

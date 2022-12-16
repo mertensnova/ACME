@@ -52,7 +52,7 @@ export default function Login() {
          return response.data;
       } catch (error: any) {
          toast({
-            title: `Invalid Credentials`,
+            title: error?.response?.data ?? "Server Error",
             position: "top-right",
             status: "error",
             isClosable: true,

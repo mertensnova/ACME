@@ -65,9 +65,9 @@ const PostCard = ({ posts }: any) => {
          }
          router.replace(router.asPath);
          return response.data;
-      } catch (error) {
+      } catch (error: any) {
          toast({
-            title: `Server error`,
+            title: error?.response?.data ?? "Server Error",
             position: "top-right",
             status: "error",
             isClosable: true,

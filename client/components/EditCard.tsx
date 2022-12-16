@@ -41,8 +41,13 @@ export function EditPostCard({ postid }: any) {
          setOldContent(response.data[0]?.Content);
 
          return response.data[0]?.Content;
-      } catch (error) {
-         console.log(error);
+      } catch (error: any) {
+         toast({
+            title: error?.response?.data ?? "Server Error",
+            position: "top-right",
+            status: "error",
+            isClosable: true,
+         });
       }
    };
    getPostById();
@@ -69,9 +74,9 @@ export function EditPostCard({ postid }: any) {
          setOldContent(response.data?.old?.content);
 
          return response.data;
-      } catch (error) {
+      } catch (error: any) {
          toast({
-            title: `Server error`,
+            title: error?.response?.data ?? "Server Error",
             position: "top-right",
             status: "error",
             isClosable: true,

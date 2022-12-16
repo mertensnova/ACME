@@ -43,7 +43,7 @@ func RegisterUser(c echo.Context) error {
 	u := new(models.Users)
 
 	err := c.Bind(&u); if err != nil {
-		return c.String(http.StatusBadRequest, "bad request")
+		return c.JSON(http.StatusBadRequest, "Bad Request")
 	}	
 	
 	// Hash password
@@ -85,7 +85,7 @@ func LoginUser(c echo.Context) error {
 	u := new(models.Users)
 	
     err := c.Bind(&u); if err!= nil {
-        return c.String(http.StatusBadRequest, "bad request")
+        return c.String(http.StatusBadRequest, "Bad Request")
     }
 	user := models.Users{
 		Password:u.Password,
@@ -97,7 +97,7 @@ func LoginUser(c echo.Context) error {
 	match := utils.CheckPasswordHash(user.Password,b.Password)
 
 	if!match {
-		return c.String(http.StatusForbidden,"Password mismatch")
+		return c.JSON(http.StatusForbidden,"Invalid Credentials")
 	}
 
 	// Set user as authenticated

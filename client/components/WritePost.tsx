@@ -67,11 +67,11 @@ const WritePost = () => {
 
          router.replace(router.asPath);
          return response;
-      } catch (error) {
+      } catch (error: any) {
          toast({
-            title: "Error has occured",
-            status: "error",
+            title: error?.response?.data ?? "Server Error",
             position: "top-right",
+            status: "error",
             isClosable: true,
          });
          console.log(error);
