@@ -13,7 +13,10 @@ class MyDocument extends Document {
    render() {
       return (
          <Html lang="en">
-            <Head />
+            <Head>
+               <meta name="description" content="Made by Amr Ashebo" />
+               <link rel="icon" href="/acme.svg" />
+            </Head>
             <body>
                <Main />
                <NextScript />

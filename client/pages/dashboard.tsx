@@ -3,10 +3,14 @@ import { GetServerSideProps } from "next";
 import { API_URL } from "./api/url";
 import Navigation from "../components/Navigation";
 import PostCard from "../components/PostCard";
+import Head from "next/head";
 
 export default function Dashboard({ posts }: any) {
    return (
       <>
+         <Head>
+            <title>Dashboard</title>
+         </Head>
          <Navigation />
          <PostCard posts={posts} />
       </>

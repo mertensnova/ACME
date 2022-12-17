@@ -7,10 +7,16 @@ import PostCard from "../../../components/PostCard";
 import ProfileCard from "../../../components/ProfileCard";
 import Navigation from "../../../components/Navigation";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import Head from "next/head";
 
 const User = ({ user }: any) => {
+   console.log(user);
+
    return (
       <>
+         <Head>
+            <title>{user?.user?.fullname}</title>
+         </Head>
          <Navigation />
          <ProfileCard data={user} />
          <Tabs isFitted variant="enclosed" colorScheme="blue">

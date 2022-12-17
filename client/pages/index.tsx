@@ -15,11 +15,6 @@ import Signup from "../components/Signup";
 export default function Home() {
    return (
       <>
-         <Head>
-            <title>Social</title>
-            <meta name="description" content="Made by Amr Ashebo" />
-            <link rel="icon" href="/favicon.ico" />
-         </Head>
          <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
             <Flex p={8} flex={1} align={"center"} justify={"center"}>
                <Stack spacing={6} w={"full"} maxW={"lg"}>
