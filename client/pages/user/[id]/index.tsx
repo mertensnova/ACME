@@ -10,12 +10,10 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Head from "next/head";
 
 const User = ({ user }: any) => {
-   console.log(user);
-
    return (
       <>
          <Head>
-            <title>{user?.user?.fullname}</title>
+            <title>ACME</title>
          </Head>
          <Navigation />
          <ProfileCard data={user} />

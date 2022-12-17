@@ -34,7 +34,8 @@ func GetAllPosts(c echo.Context) error {
 }
 
 func GetPostByID(c echo.Context) error {
-	post := models.GetAllPosts()
+	id := c.Param("id")
+	post := models.GetPostByID(id)
 	return c.JSON(http.StatusOK,post)
 }
 

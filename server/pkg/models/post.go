@@ -50,6 +50,7 @@ func GetAllPosts() []Result{
 
 func GetPostByID(id string) Result{
 	var post Result
+	
 	db.Raw("SELECT posts.id,fullname,username,content,email,profile,likes,user_id,bio,posts.created_at from posts JOIN users ON posts.user_id = users.id WHERE posts.id = ?",id).Scan(&post)
 	return post
 }

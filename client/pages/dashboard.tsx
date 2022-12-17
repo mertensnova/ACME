@@ -8,8 +8,9 @@ import Head from "next/head";
 export default function Dashboard({ posts }: any) {
    return (
       <>
+         {" "}
          <Head>
-            <title>Dashboard</title>
+            <title>ACME</title>
          </Head>
          <Navigation />
          <PostCard posts={posts} />

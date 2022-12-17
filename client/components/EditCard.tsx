@@ -38,9 +38,9 @@ export function EditPostCard({ postid }: any) {
    const getPostById = async () => {
       try {
          const response = await axios.get(`${API_URL}/thispost/${postid}`);
-         setOldContent(response.data[0]?.Content);
 
-         return response.data[0]?.Content;
+         setOldContent(response.data.Content);
+         return response;
       } catch (error: any) {
          toast({
             title: error?.response?.data ?? "Server Error",
@@ -50,6 +50,7 @@ export function EditPostCard({ postid }: any) {
          });
       }
    };
+
    getPostById();
 
    const editPost = async () => {
@@ -131,7 +132,13 @@ export function EditPostCard({ postid }: any) {
             method="PATCH"
             id="editform"
          >
-            <MenuItem onClick={onOpen} icon={<EditIcon />}>
+            <MenuItem
+               onClick={() => {
+                  onOpen();
+                  getPostById();
+               }}
+               icon={<EditIcon />}
+            >
                Edit Post
             </MenuItem>
 
