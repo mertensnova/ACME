@@ -24,6 +24,7 @@ import axios from "axios";
 import DropdownMenu from "./DropdownMenu";
 import { useToast } from "@chakra-ui/react";
 import moment from "moment";
+import AddComment from "./AddComment";
 
 const PostCard = ({ posts }: any) => {
    const toast = useToast();
@@ -168,13 +169,7 @@ const PostCard = ({ posts }: any) => {
                            >
                               Like {Likes}
                            </Button>
-                           <Button
-                              flex="1"
-                              variant="ghost"
-                              leftIcon={<BiChat />}
-                           >
-                              Comment
-                           </Button>
+                           <AddComment />
                         </CardFooter>
                      </Card>
                      <Divider orientation="horizontal" />
