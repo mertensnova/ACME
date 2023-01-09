@@ -48,6 +48,15 @@ func main() {
 	app.DELETE("/post/:id", handlers.DeletePost)
 	app.PATCH("/@my-post/:id", handlers.EditPost)
 
+	// Comment Routes
+	app.POST("/add-comment",handlers.AddComment)
+	// app.GET("/dashboard", handlers.GetAllPosts)
+	// app.GET("/thispost/:id", handlers.GetPostByID)
+	// app.POST("/like-post", handlers.LikePost)
+	// app.DELETE("/post/:id", handlers.DeletePost)
+	// app.PATCH("/@my-post/:id", handlers.EditPost)
+
+
 	app.Logger.Fatal(app.Start(":8080"))
 	
 }

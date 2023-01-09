@@ -2,25 +2,42 @@ package models
 
 import (
 	"server/pkg/config"
+	// "github.com/labstack/echo/v4"
+	
 
 	"gorm.io/gorm"
 )
 
 type Comments struct{
 	gorm.Model
-	ID int           `gorm:"primaryKey;autoIncrement"`
-    Comment string `form:"content" json:"content"`
+	ID int       `gorm:"primaryKey;autoIncrement"`
+    Reply string `form:"reply" json:"reply"`
     Likes int `json:"likes"`
 	UserID uint64 `json:"userid"`
-	
+	PostID uint64 `json:"postid"`
 }
 
 func init()  {
 	config.Connect()
 	db = config.GetDB()
-	db.AutoMigrate(&Likes{})
+	db.AutoMigrate(&Comments{})
 }
 
+func (comment *Comments) AddComment() *Comments{
+	db.Create(&Comments{
+		Reply: comment.Reply,
+		Likes: 0,
+		UserID: comment.UserID,
+		PostID: comment.PostID,
+	}) 
+	return comment 
+}
+
+// func GetAllComments(c echo.Context) error {
+// 	var result []Result
+// 	db.Raw("SELECT posts.id,fullname,username,content,email,profile,likes,user_id,bio,posts.created_at from posts JOIN users ON posts.user_id = users.id").Scan(&result)
+//     return result
+// }
 
 // func (liked_by *Likes) LikePost() (*Likes,Exist){
 // 	var b Exist

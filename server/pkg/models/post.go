@@ -11,6 +11,7 @@ type Posts struct{
 	ID int           `gorm:"primaryKey;autoIncrement"`
     Content string `form:"content" json:"content"`
     Likes int `json:"likes"`
+	Comments []Comments `gorm:"foreignKey:UserID;references:ID"`
 	UserID uint64 `json:"userid"`
 }
 

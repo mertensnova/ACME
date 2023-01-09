@@ -169,7 +169,7 @@ const PostCard = ({ posts }: any) => {
                            >
                               Like {Likes}
                            </Button>
-                           <AddComment />
+                           {/* <AddComment /> */}
                         </CardFooter>
                      </Card>
                      <Divider orientation="horizontal" />
