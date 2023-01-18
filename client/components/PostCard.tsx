@@ -156,7 +156,7 @@ const PostCard = ({ posts }: any) => {
                            }}
                         >
                            <Button
-                              flex="1"
+                              // flex="3"
                               variant="ghost"
                               onClick={(e: any) => {
                                  likePost(
@@ -169,7 +169,7 @@ const PostCard = ({ posts }: any) => {
                            >
                               Like {Likes}
                            </Button>
-                           {/* <AddComment /> */}
+                           <AddComment postid={ID}/>
                         </CardFooter>
                      </Card>
                      <Divider orientation="horizontal" />

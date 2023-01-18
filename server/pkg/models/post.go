@@ -17,6 +17,7 @@ type Posts struct{
 
 type Result struct {
 	ID  int
+	Reply string
 	Fullname string
 	Username string
 	Email  string
@@ -25,6 +26,7 @@ type Result struct {
 	Bio string
 	Likes int
 	UserID int
+	PostID int
 	CreatedAt string
 }
 
@@ -51,7 +53,6 @@ func GetAllPosts() []Result{
 
 func GetPostByID(id string) Result{
 	var post Result
-	
 	db.Raw("SELECT posts.id,fullname,username,content,email,profile,likes,user_id,bio,posts.created_at from posts JOIN users ON posts.user_id = users.id WHERE posts.id = ?",id).Scan(&post)
 	return post
 }
