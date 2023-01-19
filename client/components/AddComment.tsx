@@ -12,17 +12,20 @@ import {
    useToast,
    IconButton,
    Textarea,
+   Center,
+   Card,
 } from "@chakra-ui/react";
 import { BiChat, BiSend } from "react-icons/bi";
 import { API_URL } from "../pages/api/url";
 import axios from "axios";
 import router from "next/router";
 
-const AddComment = (postid: any) => {
+const AddComment = ({ postid }: any) => {
    const toast = useToast();
    const { isOpen, onOpen, onClose } = useDisclosure();
    const [user, setUser] = useState<any>();
    const [reply, setReply] = useState("");
+   const [comment, setComment] = useState([]);
 
    useEffect(() => {
       if (typeof window !== "undefined") {
@@ -37,6 +40,20 @@ const AddComment = (postid: any) => {
    }, []);
 
    const userid = user?.ID;
+   const getComment = async () => {
+      try {
+         const response = await axios.get(`${API_URL}/get-comments/${postid}`);
+         setComment(response?.data);
+      } catch (error: any) {
+         toast({
+            title: error?.response?.data ?? "Server Error",
+            position: "top-right",
+            status: "error",
+            isClosable: true,
+         });
+         console.log(error);
+      }
+   };
 
    const addComment = async () => {
       try {
@@ -100,13 +117,14 @@ const AddComment = (postid: any) => {
                <ModalContent>
                   <ModalHeader>Comments</ModalHeader>
                   <ModalCloseButton />
-                  <ModalBody></ModalBody>
+                  <ModalBody>
+                     <Card></Card>
+                  </ModalBody>
                   <ModalFooter>
                      <Textarea
                         size={"md"}
                         form="commentform"
                         onChange={(e: any) => setReply(e.target.value)}
-                        
                      />
                      <IconButton
                         onClick={() => {

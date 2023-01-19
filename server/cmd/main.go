@@ -51,11 +51,9 @@ func main() {
 	// Comment Routes
 	app.POST("/add-comment",handlers.AddComment)
 	app.GET("/get-comments/:id", handlers.GetCommentsByPosts)
-	// app.GET("/thispost/:id", handlers.GetPostByID)
-	// app.POST("/like-post", handlers.LikePost)
-	// app.DELETE("/post/:id", handlers.DeletePost)
-	// app.PATCH("/@my-post/:id", handlers.EditPost)
-
+	// app.PATCH("/edit-comment/:id", handlers.EditComment)
+	// app.GET("/like-comment/:id", handlers.LikeComment)
+	// app.DELETE("/comment/:id", handlers.DeleteComment)
 
 	app.Logger.Fatal(app.Start(":8080"))
 	
