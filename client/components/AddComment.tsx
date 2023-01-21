@@ -25,7 +25,6 @@ const AddComment = ({ postid }: any) => {
    const { isOpen, onOpen, onClose } = useDisclosure();
    const [user, setUser] = useState<any>();
    const [reply, setReply] = useState("");
-   const [comment, setComment] = useState([]);
 
    useEffect(() => {
       if (typeof window !== "undefined") {
@@ -40,53 +39,39 @@ const AddComment = ({ postid }: any) => {
    }, []);
 
    const userid = user?.ID;
-   const getComment = async () => {
-      try {
-         const response = await axios.get(`${API_URL}/get-comments/${postid}`);
-         setComment(response?.data);
-      } catch (error: any) {
-         toast({
-            title: error?.response?.data ?? "Server Error",
-            position: "top-right",
-            status: "error",
-            isClosable: true,
-         });
-         console.log(error);
-      }
-   };
 
-   const addComment = async () => {
-      try {
-         const response = await axios.post(
-            `${API_URL}/add-comment`,
-            {
-               userid,
-               reply,
-               postid,
-            },
-            { withCredentials: true }
-         );
-         if (response.status == 200) {
-            toast({
-               title: `Comment added successfully`,
-               position: "top-right",
-               status: "success",
-               isClosable: true,
-            });
-         }
+   // const addComment = async () => {
+   //    try {
+   //       const response = await axios.post(
+   //          `${API_URL}/add-comment`,
+   //          {
+   //             userid,
+   //             reply,
+   //             postid,
+   //          },
+   //          { withCredentials: true }
+   //       );
+   //       if (response.status == 200) {
+   //          toast({
+   //             title: `Comment added successfully`,
+   //             position: "top-right",
+   //             status: "success",
+   //             isClosable: true,
+   //          });
+   //       }
 
-         router.replace(router.asPath);
-         return response;
-      } catch (error: any) {
-         toast({
-            title: error?.response?.data ?? "Server Error",
-            position: "top-right",
-            status: "error",
-            isClosable: true,
-         });
-         console.log(error);
-      }
-   };
+   //       router.replace(router.asPath);
+   //       return response;
+   //    } catch (error: any) {
+   //       toast({
+   //          title: error?.response?.data ?? "Server Error",
+   //          position: "top-right",
+   //          status: "error",
+   //          isClosable: true,
+   //       });
+   //       console.log(error);
+   //    }
+   // };
    return (
       <>
          <form

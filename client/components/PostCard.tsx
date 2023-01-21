@@ -13,13 +13,12 @@ import {
    useColorModeValue,
    Divider,
    Center,
-   Image,
    useMediaQuery,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { API_URL } from "../pages/api/url";
 import WritePost from "./WritePost";
-import { BiLike, BiChat } from "react-icons/bi";
+import { BiLike } from "react-icons/bi";
 import axios from "axios";
 import DropdownMenu from "./DropdownMenu";
 import { useToast } from "@chakra-ui/react";
@@ -31,7 +30,6 @@ const PostCard = ({ posts }: any) => {
    const [user, setUser] = useState<any>();
    const router = useRouter();
    const userId = user?.ID;
-   const [edit, setEdit] = useState(false);
    const [isLessThan500] = useMediaQuery("(min-width: 500px)");
 
    const size = isLessThan500 ? "md" : "";
@@ -169,7 +167,7 @@ const PostCard = ({ posts }: any) => {
                            >
                               Like {Likes}
                            </Button>
-                           <AddComment postid={ID}/>
+                           <AddComment postid={ID} />
                         </CardFooter>
                      </Card>
                      <Divider orientation="horizontal" />
