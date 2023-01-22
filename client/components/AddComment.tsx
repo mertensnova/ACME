@@ -77,7 +77,7 @@ const AddComment = ({ postid }: any) => {
          <form
             onSubmit={(e: any) => {
                e.preventDefault();
-               addComment();
+               // addComment();
             }}
             action={`${API_URL}/add-comment`}
             method="POST"
@@ -114,7 +114,7 @@ const AddComment = ({ postid }: any) => {
                      <IconButton
                         onClick={() => {
                            onClose();
-                           addComment();
+                           // addComment();
                         }}
                         ml={5}
                         icon={<BiSend />}

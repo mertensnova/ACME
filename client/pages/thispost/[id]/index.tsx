@@ -3,8 +3,6 @@ import { GetServerSideProps } from "next";
 import { useState } from "react";
 import axios from "axios";
 import { API_URL } from "../../api/url";
-import PostCard from "../../../components/PostCard";
-import ProfileCard from "../../../components/ProfileCard";
 import Navigation from "../../../components/Navigation";
 import {
    Text,
@@ -99,7 +97,7 @@ const Post = ({ post, comment }: any) => {
          <Head>
             <title>ACME</title>
          </Head>
-         {/* console.log(comment); */}
+         <Navigation />
          <Card data-key={ID} margin={"5"} key={ID} size={"lg"}>
             <CardHeader>
                <Flex>
