@@ -31,10 +31,14 @@ func AddComment(c echo.Context) error {
 }
 
 func GetCommentsByPosts(c echo.Context) error {
-	
 	id := c.Param("id")
 	comments := models.GetCommentsByPosts(id)
 	return c.JSON(http.StatusOK,comments)
+}
 
+func DeleteComment(c echo.Context) error {
+	id := c.Param("id")
+    deletedComment:= models.DeleteComment(id)
+    return c.JSON(http.StatusOK,deletedComment)
 }
 

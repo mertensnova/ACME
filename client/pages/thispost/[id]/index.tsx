@@ -18,22 +18,21 @@ import {
    Button,
    CardFooter,
    IconButton,
-   Textarea,
-   useDisclosure,
    useToast,
+   Input,
 } from "@chakra-ui/react";
 import moment from "moment";
 import DropdownMenu from "../../../components/DropdownMenu";
-import { BiLike, BiSend } from "react-icons/bi";
+import { BiLike, BiSend, BiTrash } from "react-icons/bi";
 import router from "next/router";
 import Head from "next/head";
 
 const Post = ({ post, comment }: any) => {
-   console.log(comment);
-
    const toast = useToast();
    const [user, setUser] = useState<any>();
+
    const [reply, setReply] = useState("");
+
    useEffect(() => {
       if (typeof window !== "undefined") {
          try {
@@ -47,16 +46,7 @@ const Post = ({ post, comment }: any) => {
    }, []);
 
    const userid = user?.ID;
-   const {
-      ID,
-      Fullname,
-      Profile,
-      Username,
-      UserID,
-      CreatedAt,
-      Content,
-      Likes,
-   } = post;
+   const postid = post?.ID;
 
    const addComment = async () => {
       try {
@@ -65,7 +55,7 @@ const Post = ({ post, comment }: any) => {
             {
                userid,
                reply,
-               ID,
+               postid,
             },
             { withCredentials: true }
          );
@@ -76,9 +66,71 @@ const Post = ({ post, comment }: any) => {
                status: "success",
                isClosable: true,
             });
-            console.log(response);
+            // console.log(response);
          }
 
+         router.replace(router.asPath);
+         return response;
+      } catch (error: any) {
+         toast({
+            title: error?.response?.data ?? "Server Error",
+            position: "top-right",
+            status: "error",
+            isClosable: true,
+         });
+         console.log(error);
+      }
+   };
+
+   const likeComment = async (e: any) => {
+      try {
+         const commentid = parseInt(e);
+
+         const response = await axios.post(
+            `${API_URL}/like-comment`,
+            {
+               userid,
+               commentid,
+            },
+            { withCredentials: true }
+         );
+         if (response.status == 200) {
+            toast({
+               title: `You liked the comment`,
+               position: "top-right",
+               status: "success",
+               isClosable: true,
+            });
+         }
+         // router.replace(router.asPath);
+         return response;
+      } catch (error: any) {
+         toast({
+            title: error?.response?.data ?? "Server Error",
+            position: "top-right",
+            status: "error",
+            isClosable: true,
+         });
+         console.log(error);
+      }
+   };
+
+   const deleteComment = async (e: any) => {
+      try {
+         const commentid = parseInt(e);
+         const response = await axios.delete(
+            `${API_URL}/like-comment/${commentid}`,
+
+            { withCredentials: true }
+         );
+         if (response.status == 200) {
+            toast({
+               title: `You deleted the comment`,
+               position: "top-right",
+               status: "success",
+               isClosable: true,
+            });
+         }
          router.replace(router.asPath);
          return response;
       } catch (error: any) {
@@ -98,39 +150,41 @@ const Post = ({ post, comment }: any) => {
             <title>ACME</title>
          </Head>
          <Navigation />
-         <Card data-key={ID} margin={"5"} key={ID} size={"lg"}>
+         <Card data-key={post?.ID} margin={"5"} key={post?.ID} size={"lg"}>
             <CardHeader>
                <Flex>
                   <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                     <Avatar name={Fullname} src={`${API_URL}/${Profile}`} />
+                     <Avatar
+                        name={post?.Fullname}
+                        src={`${API_URL}/${post?.Profile}`}
+                     />
 
                      <Box>
-                        <Heading size="sm">{Fullname}</Heading>
+                        <Heading size="sm">{post?.Fullname}</Heading>
                         <Text
                            // eslint-disable-next-line react-hooks/rules-of-hooks
                            color={useColorModeValue("gray.700", "gray.400")}
                         >
-                           @{Username}
+                           @{post?.Username}
                         </Text>
                         <Text
                            // eslint-disable-next-line react-hooks/rules-of-hooks
                            color={useColorModeValue("gray.700", "gray.400")}
                         >
-                           {moment(CreatedAt).startOf("second").fromNow()}
+                           {moment(post?.CreatedAt).startOf("second").fromNow()}
                         </Text>
                      </Box>
                   </Flex>
-                  <DropdownMenu userid={UserID} postid={ID} />
+                  <DropdownMenu userid={post?.UserID} postid={post?.ID} />
                </Flex>
             </CardHeader>
             <CardBody>
-               <Text>{Content}</Text>
+               <Text>{post?.Content}</Text>
             </CardBody>
          </Card>
          <Container>
             {comment?.map((e: any) => {
-               const { ID, Reply, Fullname, Username, Likes } = e;
-
+               const { ID, Reply, Fullname, Username, Likes, CreatedAt } = e;
                return (
                   <Card data-key={ID} margin={"10"} key={ID} size={"sm"}>
                      <CardHeader>
@@ -171,18 +225,31 @@ const Post = ({ post, comment }: any) => {
                         <Button
                            flex="3"
                            variant="ghost"
-                           //    onClick={(e: any) => {
-                           //       likePost(
-                           //          e.target.parentElement.parentElement.getAttribute(
-                           //             "data-key"
-                           //          )
-                           //       );
-                           //    }}
+                           onClick={(e: any) => {
+                              likeComment(
+                                 e.target.parentElement.parentElement.getAttribute(
+                                    "data-key"
+                                 )
+                              );
+                           }}
                            leftIcon={<BiLike />}
                         >
                            Like {Likes}
                         </Button>
-                        {/* <AddComment postid={ID} /> */}
+                        <Button
+                           flex="3"
+                           variant="ghost"
+                           onClick={(e: any) => {
+                              deleteComment(
+                                 e.target.parentElement.parentElement.getAttribute(
+                                    "data-key"
+                                 )
+                              );
+                           }}
+                           leftIcon={<BiTrash />}
+                        >
+                           Delete
+                        </Button>
                      </CardFooter>
                   </Card>
                );
@@ -198,16 +265,14 @@ const Post = ({ post, comment }: any) => {
             id="commentform"
          >
             <Flex>
-               <Textarea
+               <Input
                   size={"md"}
+                  my={"2"}
                   form="commentform"
                   onChange={(e: any) => setReply(e.target.value)}
                />
                <IconButton
                   type="submit"
-                  onClick={() => {
-                     addComment();
-                  }}
                   ml={5}
                   icon={<BiSend />}
                   aria-label={""}

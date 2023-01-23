@@ -18,12 +18,11 @@ import {
 import { useRouter } from "next/router";
 import { API_URL } from "../pages/api/url";
 import WritePost from "./WritePost";
-import { BiLike } from "react-icons/bi";
+import { BiChat, BiLike } from "react-icons/bi";
 import axios from "axios";
 import DropdownMenu from "./DropdownMenu";
 import { useToast } from "@chakra-ui/react";
 import moment from "moment";
-import AddComment from "./AddComment";
 
 const PostCard = ({ posts }: any) => {
    const toast = useToast();
@@ -154,7 +153,6 @@ const PostCard = ({ posts }: any) => {
                            }}
                         >
                            <Button
-                              // flex="3"
                               variant="ghost"
                               onClick={(e: any) => {
                                  likePost(
@@ -167,7 +165,18 @@ const PostCard = ({ posts }: any) => {
                            >
                               Like {Likes}
                            </Button>
-                           <AddComment postid={ID} />
+                           <Button
+                              onClick={() => {
+                                 router.push({
+                                    pathname: "/thispost/[pid]",
+                                    query: { pid: ID },
+                                 });
+                              }}
+                              variant="ghost"
+                              leftIcon={<BiChat />}
+                           >
+                              Comment
+                           </Button>
                         </CardFooter>
                      </Card>
                      <Divider orientation="horizontal" />

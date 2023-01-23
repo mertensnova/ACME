@@ -18,7 +18,7 @@ type Users struct{
 	Profile string 	`form:"Image" json:"image"`
 	Bio		string 	`form:"Bio" json:"bio"`
 	Posts []Posts  	`gorm:"foreignKey:UserID;references:ID"`
-	LikedPosts []Likes `gorm:"foreignKey:PostID;references:ID"`
+	LikedPosts []LikesPost `gorm:"foreignKey:PostID;references:ID"`
 }
 
 func init()  {
