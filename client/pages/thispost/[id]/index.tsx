@@ -185,8 +185,15 @@ const Post = ({ post, comment }: any) => {
          </Card>
          <Container>
             {comment?.map((e: any) => {
-               const { ID, Reply, Fullname, Username, Likes, CreatedAt } = e;
-               // console.log(ID);
+               const {
+                  ID,
+                  Reply,
+                  Fullname,
+                  Username,
+                  Likes,
+                  CreatedAt,
+                  UserID,
+               } = e;
 
                return (
                   <Card data-key={ID} margin={"10"} key={ID} size="sm">
@@ -239,20 +246,26 @@ const Post = ({ post, comment }: any) => {
                         >
                            Like {Likes}
                         </Button>
-                        <Button
-                           flex="3"
-                           variant="ghost"
-                           onClick={(e: any) => {
-                              deleteComment(
-                                 e.target.parentElement.parentElement.getAttribute(
-                                    "data-key"
-                                 )
-                              );
-                           }}
-                           leftIcon={<BiTrash />}
-                        >
-                           Delete
-                        </Button>
+                        {UserID == userid ? (
+                           <>
+                              <Button
+                                 flex="3"
+                                 variant="ghost"
+                                 onClick={(e: any) => {
+                                    deleteComment(
+                                       e.target.parentElement.parentElement.getAttribute(
+                                          "data-key"
+                                       )
+                                    );
+                                 }}
+                                 leftIcon={<BiTrash />}
+                              >
+                                 Delete
+                              </Button>
+                           </>
+                        ) : (
+                           ""
+                        )}
                      </CardFooter>
                   </Card>
                );

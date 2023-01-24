@@ -4,37 +4,11 @@ import (
 	"net/http"
 	"server/pkg/models"
 	"server/pkg/utils"
-	"strings"
 
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 )
-
-func AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
-	return func(c echo.Context) error {
-		session, _ := session.Get("session", c)
-		session.Options = &sessions.Options{
-			Path:     "/",
-			MaxAge:   86400 * 7,
-			HttpOnly: true,
-		  }
-		_, ok := session.Values["userID"]
-
-		if strings.Split(c.Path(),"/")[1] == "login" ||
-		 strings.Split(c.Path(),"/")[1] == "register" {
-			return next(c)
-		}
-		
-		if !ok {
-			return c.String(http.StatusForbidden, "Unauthorized")
-		}else if session.Values["authenticated"] == false {
-			return c.String(http.StatusForbidden, "Unauthorized")
-		}else {
-			return next(c)
-		}
-	}
-}
 
 func RegisterUser(c echo.Context) error {
 
