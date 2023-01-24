@@ -85,7 +85,6 @@ const Post = ({ post, comment }: any) => {
    const likeComment = async (e: any) => {
       try {
          const commentid = parseInt(e);
-
          const response = await axios.post(
             `${API_URL}/like-comment`,
             {
@@ -102,7 +101,7 @@ const Post = ({ post, comment }: any) => {
                isClosable: true,
             });
          }
-         // router.replace(router.asPath);
+         router.replace(router.asPath);
          return response;
       } catch (error: any) {
          toast({
@@ -119,7 +118,7 @@ const Post = ({ post, comment }: any) => {
       try {
          const commentid = parseInt(e);
          const response = await axios.delete(
-            `${API_URL}/like-comment/${commentid}`,
+            `${API_URL}/comment/${commentid}`,
 
             { withCredentials: true }
          );
@@ -144,13 +143,15 @@ const Post = ({ post, comment }: any) => {
       }
    };
 
+   // console.log(comment);
+
    return (
       <>
          <Head>
             <title>ACME</title>
          </Head>
          <Navigation />
-         <Card data-key={post?.ID} margin={"5"} key={post?.ID} size={"lg"}>
+         <Card data-key={post?.ID} margin={"5"} key={post?.ID} size="lg">
             <CardHeader>
                <Flex>
                   <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
@@ -185,8 +186,10 @@ const Post = ({ post, comment }: any) => {
          <Container>
             {comment?.map((e: any) => {
                const { ID, Reply, Fullname, Username, Likes, CreatedAt } = e;
+               // console.log(ID);
+
                return (
-                  <Card data-key={ID} margin={"10"} key={ID} size={"sm"}>
+                  <Card data-key={ID} margin={"10"} key={ID} size="sm">
                      <CardHeader>
                         <CardHeader>
                            <Box>

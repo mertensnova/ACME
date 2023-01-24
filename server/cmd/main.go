@@ -24,7 +24,7 @@ func main() {
 	  }))
 
 	app.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
-	// app.Use(handlers.AuthMiddleware)
+	app.Use(handlers.AuthMiddleware)
 
 	app.Static("/", "static")	
    
@@ -50,7 +50,7 @@ func main() {
 	// Comment Routes
 	app.POST("/add-comment",handlers.AddComment)
 	app.GET("/get-comments/:id", handlers.GetCommentsByPosts)
-	app.GET("/like-comment", handlers.LikeComment)
+	app.POST("/like-comment", handlers.LikeComment)
 	app.DELETE("/comment/:id", handlers.DeleteComment)
 
 	app.Logger.Fatal(app.Start(":8080"))

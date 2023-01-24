@@ -20,7 +20,7 @@ export default function Dashboard({ posts }: any) {
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
    const res = await axios.get(`${API_URL}/dashboard`, {
       withCredentials: true,
-   });
+   });   
 
    const posts = res.data;
 
