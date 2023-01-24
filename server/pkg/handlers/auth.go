@@ -27,15 +27,12 @@ func AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		}
 		
 		if !ok {
-			// http.Redirect(c.Response(),c.Request(),"/",http.StatusFound)
 			return c.String(http.StatusForbidden, "Unauthorized")
-		}
-		if session.Values["authenticated"] == false {
-			// http.Redirect(c.Response(),c.Request(),"/",http.StatusFound)
-
+		}else if session.Values["authenticated"] == false {
 			return c.String(http.StatusForbidden, "Unauthorized")
+		}else {
+			return next(c)
 		}
-		return next(c)
 	}
 }
 
