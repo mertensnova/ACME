@@ -78,5 +78,6 @@ func ServeFrames(data string) string{
         jpeg.Encode(f, im, nil)
 
     }
+
         return image
 }
