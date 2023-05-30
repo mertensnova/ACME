@@ -1,20 +1,24 @@
-# Use alpine as the base image
-FROM alpine:latest
+# Use the official golang image as a base image
+FROM golang:1.16
 
-# Install golang
-RUN apk add --no-cache go
-
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the source code
+# Copy the go.mod and go.sum files to the working directory
+COPY ../go.mod .
+COPY ../go.sum .
+
+# Download all dependencies
+RUN go mod download
+
+# Copy the source code from the current directory to the working directory
 COPY . .
 
-# Build the binary
-RUN go build -o server .
+# Build the application
+RUN go build -o main ./cmd/main.go
 
-# Expose port 8080
+# Expose port 8080 to the outside world
 EXPOSE 8080
 
-# Run the binary
-CMD ["./server"]
+# Run the executable
+CMD ["./main"]

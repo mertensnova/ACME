@@ -7,7 +7,6 @@ import {
    Input,
    Stack,
    useColorModeValue,
-   HStack,
    Avatar,
    AvatarBadge,
    IconButton,
@@ -52,7 +51,7 @@ export default function UserProfileEdit(): JSX.Element {
          return response;
       } catch (error) {
          toast({
-            title:  `Error has occurred`,
+            title: `Error has occurred`,
             position: "top-right",
             status: "error",
             isClosable: true,

@@ -2,7 +2,16 @@
 
 A CRUD app that allows user's to post, update delete posts.
 
+## Demo
+
+Live Preview
+
+[Live](https://social-media-amr8644.vercel.app/)
+
 ## Tech Stack
+
+**Client:** Next JS and Chakra UI
+
 **Server:** Golang and PostgreSQL
 
 ## Run Locally
@@ -18,6 +27,25 @@ Go to the project directory
 ```bash
   cd Social-Media
 ```
+
+## For Client Side
+
+```bash
+  cd client
+```
+
+Install dependencies
+
+```bash
+  yarn install
+```
+
+Run
+
+```bash
+  yarn run dev
+```
+
 ## For Server Side
 
 ```bash
