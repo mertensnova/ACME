@@ -9,7 +9,7 @@ const EditProfile = () => {
          <Head>
             <title>ACME</title>
          </Head>
-         <Navigation />;
+         <Navigation />
          <UserProfileEdit />
       </>
    );
